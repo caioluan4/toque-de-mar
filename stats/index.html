@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de Visualizações — Toque de Mar</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  html { background: #0b1f33; }
+  body { margin: 0; background: #0b1f33; font-family: 'Outfit', sans-serif; color: #f2f2f0; }
+
+  #password-gate {
+    position: fixed; inset: 0;
+    background: linear-gradient(180deg, rgba(6,18,32,.94), rgba(6,18,32,.98)), url('../assets/loja-bg.jpg') center/cover;
+    display: flex; align-items: center; justify-content: center; z-index: 100; padding: 24px;
+  }
+  .gate-card { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; max-width: 280px; }
+  .gate-logo { width: 120px; height: auto; }
+  #gate-input, #gate-button {
+    width: 260px; max-width: 100%; padding: 11px 14px;
+    font-family: 'Outfit', sans-serif; font-size: 13px; border-radius: 999px; border: none;
+  }
+  #gate-input { background: rgba(255,255,255,.95); color: #1B4470; }
+  #gate-input:focus { outline: none; background: #fff; }
+  #gate-button {
+    background: #fff; color: #1B4470; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    cursor: pointer; transition: transform .15s ease;
+  }
+  #gate-button:hover { transform: translateY(-1px); }
+  #gate-error { background: rgba(255,255,255,.95); color: #a33; font-size: 12px; font-weight: 600; text-align: center; width: 100%; margin: 0; padding: 8px 12px; border-radius: 8px; }
+
+  #dashboard-content { padding: 40px 20px 80px; }
+  .dash-header { display: flex; align-items: center; gap: 18px; max-width: 900px; margin: 0 auto 28px; flex-wrap: wrap; }
+  .dash-logo { width: 56px; height: auto; flex-shrink: 0; }
+  .dash-title { font-size: 24px; text-transform: uppercase; letter-spacing: .04em; color: #f2f2f0; margin: 0; }
+  .dash-updated { font-size: 11.5px; color: rgba(255,255,255,.5); margin: 6px 0 0; }
+
+  .period-filter { max-width: 900px; margin: 0 auto 24px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .period-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: 7px 13px; border-radius: 999px; cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+  }
+  .period-btn:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+  .period-btn.active { background: #fff; border-color: #fff; color: #1B4470; }
+
+  .advanced-toggle {
+    background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: 7px 13px; border-radius: 999px; cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+  }
+  .advanced-toggle:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+  .advanced-toggle.active, .advanced-toggle.open { background: #fff; border-color: #fff; color: #1B4470; }
+
+  .advanced-panel {
+    display: none; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%;
+    max-width: 900px; margin: 10px auto 24px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; padding: 16px;
+  }
+  .advanced-panel.open { display: flex; }
+  .advanced-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .advanced-label { font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.5); min-width: 60px; }
+
+  .month-picker {
+    background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.85);
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 8px; cursor: pointer;
+  }
+  .month-picker:hover { border-color: rgba(255,255,255,.6); }
+  .month-picker.active { background: #fff; border-color: #fff; color: #1B4470; }
+  .month-picker option { background: #0f2a48; color: #f2f2f0; }
+
+  .date-range { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .date-input {
+    background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.85);
+    font-family: 'Outfit', sans-serif; font-size: 11px; padding: 5px 8px; border-radius: 8px; color-scheme: dark;
+  }
+  .date-input:hover, .date-input:focus { border-color: rgba(255,255,255,.6); outline: none; }
+  .date-sep { font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; }
+  .date-apply {
+    background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+  }
+  .date-apply:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+  .date-apply.active { background: #fff; border-color: #fff; color: #1B4470; }
+
+  .tab-panel { max-width: 900px; margin: 0 auto; }
+  .visits-block { display: flex; align-items: baseline; gap: 10px; margin-bottom: 28px; }
+  .visits-num { font-size: 40px; font-weight: 700; color: #fff; line-height: 1; }
+  .visits-label { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+
+  .dash-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.5); margin: 0 0 14px; }
+
+  .metric-list { display: flex; flex-direction: column; }
+  .metric-row { display: flex; align-items: center; gap: 16px; padding: 12px 4px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .metric-info { flex: 1; min-width: 0; }
+  .metric-name { font-size: 13.5px; color: #e5e5e5; margin-bottom: 7px; }
+  .metric-track { height: 4px; background: rgba(255,255,255,.1); border-radius: 999px; overflow: hidden; }
+  .metric-fill { height: 100%; width: 0%; background: #fff; border-radius: 999px; transition: width .5s ease; }
+  .metric-value { font-size: 17px; font-weight: 600; color: #f2f2f0; min-width: 34px; text-align: right; flex-shrink: 0; }
+
+  .dash-empty { text-align: center; color: rgba(255,255,255,.6); padding: 40px; display: none; }
+
+  @media (max-width: 480px) {
+    .gate-logo { width: 96px; }
+    #gate-input, #gate-button { width: 100%; }
+    #dashboard-content { padding: 26px 16px 60px; }
+    .dash-title { font-size: 19px; }
+    .visits-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="password-gate">
+  <div class="gate-card">
+    <img src="../assets/logo-white.png" alt="Toque de Mar" class="gate-logo">
+    <input type="password" id="gate-input" placeholder="Senha" autocomplete="off">
+    <button id="gate-button">Entrar</button>
+    <p id="gate-error" style="display:none;">Senha incorreta</p>
+  </div>
+</div>
+
+<div id="dashboard-content" style="display:none;">
+  <div class="dash-header">
+    <img src="../assets/logo-white.png" alt="Toque de Mar" class="dash-logo">
+    <div>
+      <h1 class="dash-title">Painel de Visualizações</h1>
+      <p class="dash-updated" id="dash-updated"></p>
+    </div>
+  </div>
+
+  <div class="period-filter" id="period-filter">
+    <button class="period-btn active" data-period="hoje">Hoje</button>
+    <button class="period-btn" data-period="ontem">Ontem</button>
+    <button class="period-btn" data-period="semana">Essa Semana</button>
+    <button class="period-btn" data-period="mes">Esse Mês</button>
+    <button class="period-btn" data-period="total">Total</button>
+    <button type="button" class="advanced-toggle" id="advanced-toggle">Avançado</button>
+  </div>
+
+  <div class="advanced-panel" id="advanced-panel">
+    <div class="advanced-row">
+      <span class="advanced-label">Mês</span>
+      <select class="month-picker" id="month-picker"><option value="">Escolher mês…</option></select>
+    </div>
+    <div class="advanced-row">
+      <span class="advanced-label">Período</span>
+      <span class="date-range">
+        <input type="date" class="date-input" id="date-start">
+        <span class="date-sep">até</span>
+        <input type="date" class="date-input" id="date-end">
+        <button type="button" class="date-apply" id="date-apply">Aplicar</button>
+      </span>
+    </div>
+  </div>
+
+  <div class="tab-panel">
+    <div class="visits-block">
+      <span class="visits-num" id="page-visits">0</span>
+      <span class="visits-label">visitas no linktree</span>
+    </div>
+    <p class="dash-subtitle">Cliques por botão</p>
+    <div class="metric-list" id="page-events"></div>
+  </div>
+
+  <div class="dash-empty" id="dash-empty">Estatísticas ainda não disponíveis, volte em breve.</div>
+</div>
+
+<script>
+  var GIST_ID = '245337becc52e524000498c7067c21f4';
+  var CORRECT_HASH = "5b0435c4cb418f242802f1d38927f63d4f359ee0f9574d79fc46e34f46f28053";
+
+  var PAGE_PATH = '/';
+  var EVENTS = [
+    ['whatsapp-pedido', 'WhatsApp'],
+    ['delivery-ifood', 'iFood'],
+    ['delivery-cardapio', 'Cardápio Digital'],
+    ['nav-localizacao', 'Localização'],
+    ['loc-google-maps', 'Google Maps'],
+    ['loc-waze', 'Waze'],
+    ['nav-atacado', 'Pedidos Atacado'],
+    ['nav-avalie-google', 'Avalie no Google'],
+    ['social-facebook', 'Facebook']
+  ];
+
+  var STATS = null;
+  var currentPeriod = 'hoje';
+
+  async function sha256(text) {
+    var buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buffer)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  function showDashboard() {
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
+    loadStats();
+  }
+
+  if (localStorage.getItem('tdm_dashboard_auth') === CORRECT_HASH) {
+    showDashboard();
+  }
+
+  document.getElementById('gate-button').addEventListener('click', async function () {
+    var input = document.getElementById('gate-input').value;
+    var hash = await sha256(input);
+    if (hash === CORRECT_HASH) {
+      localStorage.setItem('tdm_dashboard_auth', CORRECT_HASH);
+      showDashboard();
+    } else {
+      document.getElementById('gate-error').style.display = 'block';
+    }
+  });
+
+  document.getElementById('gate-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('gate-button').click();
+  });
+
+  var monthPicker = document.getElementById('month-picker');
+  var advancedToggle = document.getElementById('advanced-toggle');
+  var advancedPanel = document.getElementById('advanced-panel');
+  var dateStart = document.getElementById('date-start');
+  var dateEnd = document.getElementById('date-end');
+  var dateApply = document.getElementById('date-apply');
+
+  document.querySelectorAll('.period-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.period-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      monthPicker.value = '';
+      monthPicker.classList.remove('active');
+      dateApply.classList.remove('active');
+      currentPeriod = btn.getAttribute('data-period');
+      renderDashboard();
+    });
+  });
+
+  advancedToggle.addEventListener('click', function () {
+    var isOpen = advancedPanel.classList.toggle('open');
+    advancedToggle.classList.toggle('open', isOpen);
+  });
+
+  monthPicker.addEventListener('change', function () {
+    if (!monthPicker.value) return;
+    document.querySelectorAll('.period-btn').forEach(function (b) { b.classList.remove('active'); });
+    monthPicker.classList.add('active');
+    dateApply.classList.remove('active');
+    dateStart.value = '';
+    dateEnd.value = '';
+    currentPeriod = 'month:' + monthPicker.value;
+    renderDashboard();
+  });
+
+  dateApply.addEventListener('click', function () {
+    if (!dateStart.value || !dateEnd.value) return;
+    document.querySelectorAll('.period-btn').forEach(function (b) { b.classList.remove('active'); });
+    monthPicker.value = '';
+    monthPicker.classList.remove('active');
+    dateApply.classList.add('active');
+    currentPeriod = 'range:' + dateStart.value + ':' + dateEnd.value;
+    renderDashboard();
+  });
+
+  function isoDate(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function getRange(key) {
+    var today = new Date();
+    var todayStr = isoDate(today);
+    if (key === 'hoje') return [todayStr, todayStr];
+    if (key === 'ontem') {
+      var y = new Date(today); y.setDate(y.getDate() - 1);
+      return [isoDate(y), isoDate(y)];
+    }
+    if (key === 'semana') {
+      var sinceMonday = (today.getDay() + 6) % 7;
+      var mon = new Date(today); mon.setDate(mon.getDate() - sinceMonday);
+      return [isoDate(mon), todayStr];
+    }
+    if (key === 'mes') {
+      var first = new Date(today.getFullYear(), today.getMonth(), 1);
+      return [isoDate(first), todayStr];
+    }
+    if (key.indexOf('month:') === 0) {
+      var parts = key.slice(6).split('-');
+      var y2 = parseInt(parts[0], 10), m2 = parseInt(parts[1], 10);
+      var first2 = new Date(y2, m2 - 1, 1);
+      var last2 = new Date(y2, m2, 0);
+      return [isoDate(first2), isoDate(last2)];
+    }
+    if (key.indexOf('range:') === 0) {
+      var rp = key.slice(6).split(':');
+      return [rp[0], rp[1]];
+    }
+    return [null, null];
+  }
+
+  var MONTH_NAMES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+  function populateMonthPicker() {
+    if (!STATS || !STATS.items) return;
+    var monthSet = {};
+    STATS.items.forEach(function (item) {
+      Object.keys(item.days || {}).forEach(function (day) {
+        monthSet[day.slice(0, 7)] = true;
+      });
+    });
+    var keys = Object.keys(monthSet).sort().reverse();
+    keys.forEach(function (key) {
+      var parts = key.split('-');
+      var label = MONTH_NAMES[parseInt(parts[1], 10) - 1] + ' de ' + parts[0];
+      var opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = label;
+      monthPicker.appendChild(opt);
+    });
+  }
+
+  function setDateInputBounds() {
+    if (!STATS || !STATS.items) return;
+    var minDay = null;
+    var maxDay = isoDate(new Date());
+    STATS.items.forEach(function (item) {
+      Object.keys(item.days || {}).forEach(function (day) {
+        if (!minDay || day < minDay) minDay = day;
+      });
+    });
+    [dateStart, dateEnd].forEach(function (input) {
+      if (minDay) input.min = minDay;
+      input.max = maxDay;
+    });
+  }
+
+  function resolvePeriod() {
+    if (!STATS || !STATS.items) return null;
+    var range = getRange(currentPeriod);
+    var pages = [], events = [];
+    STATS.items.forEach(function (item) {
+      var count = 0;
+      var days = item.days || {};
+      if (range[0] === null) {
+        for (var d in days) count += days[d];
+      } else {
+        for (var d2 in days) {
+          if (d2 >= range[0] && d2 <= range[1]) count += days[d2];
+        }
+      }
+      var entry = { path: item.path, count: count };
+      (item.event ? events : pages).push(entry);
+    });
+    return { pages: pages, events: events };
+  }
+
+  function normPath(p) {
+    return (p || '').toLowerCase().replace(/^\/+/, '').replace(/\/+$/, '');
+  }
+
+  function findCount(list, path) {
+    var target = normPath(path);
+    for (var i = 0; i < list.length; i++) {
+      if (normPath(list[i].path) === target) return list[i].count;
+    }
+    return 0;
+  }
+
+  function renderMetricList(containerId, registry, eventsList) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = '';
+    var items = registry.map(function (entry) {
+      return { label: entry[1], count: findCount(eventsList, entry[0]) };
+    });
+    items.sort(function (a, b) { return b.count - a.count; });
+    var max = Math.max.apply(null, items.map(function (x) { return x.count; }).concat([1]));
+    items.forEach(function (item) {
+      var pct = Math.round((item.count / max) * 100);
+      var row = document.createElement('div');
+      row.className = 'metric-row';
+      row.innerHTML =
+        '<div class="metric-info">' +
+          '<div class="metric-name">' + item.label + '</div>' +
+          '<div class="metric-track"><div class="metric-fill" style="width:' + pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="metric-value">' + item.count + '</div>';
+      container.appendChild(row);
+    });
+  }
+
+  function renderDashboard() {
+    var period = resolvePeriod();
+    if (!period) return;
+    document.getElementById('page-visits').textContent = findCount(period.pages, PAGE_PATH);
+    renderMetricList('page-events', EVENTS, period.events);
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    return d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  async function loadStats() {
+    try {
+      var res = await fetch('https://api.github.com/gists/' + GIST_ID);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var gist = await res.json();
+      STATS = JSON.parse(gist.files['stats.json'].content);
+      document.getElementById('dash-updated').textContent = STATS.updated_at ? ('Atualizado em: ' + formatDate(STATS.updated_at)) : 'Ainda sem dados';
+      populateMonthPicker();
+      setDateInputBounds();
+      renderDashboard();
+    } catch (err) {
+      document.getElementById('dash-empty').style.display = 'block';
+      console.error(err);
+    }
+  }
+</script>
+
+</body>
+</html>
