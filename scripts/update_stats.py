@@ -10,6 +10,8 @@ Variaveis de ambiente necessarias:
 import json
 import os
 import sys
+import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 
@@ -19,6 +21,22 @@ GIST_TOKEN = os.environ["GIST_TOKEN"]
 GIST_ID = os.environ["GIST_ID"]
 
 BASE_URL = f"https://{GOATCOUNTER_SITE}.goatcounter.com/api/v0"
+
+RETRIES = 3
+RETRY_DELAY_SECONDS = 5
+
+
+def with_retries(func, *args, **kwargs):
+    last_exc = None
+    for attempt in range(1, RETRIES + 1):
+        try:
+            return func(*args, **kwargs)
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as exc:
+            last_exc = exc
+            if attempt < RETRIES:
+                print(f"Tentativa {attempt} falhou ({exc}); tentando de novo em {RETRY_DELAY_SECONDS}s...", file=sys.stderr)
+                time.sleep(RETRY_DELAY_SECONDS)
+    raise last_exc
 
 
 def gc_get(path, params=None):
@@ -30,8 +48,12 @@ def gc_get(path, params=None):
         "Authorization": f"Bearer {GOATCOUNTER_TOKEN}",
         "Accept": "application/json",
     })
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.load(resp)
+
+    def _do():
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.load(resp)
+
+    return with_retries(_do)
 
 
 def fetch_all_hits():
@@ -46,7 +68,7 @@ def fetch_all_hits():
         items.extend(hits)
         if not data.get("more") or not hits:
             break
-        after = hits[-1]["id"]
+        after = hits[-1].get("path_id") or hits[-1].get("id")
     return items
 
 
@@ -74,18 +96,22 @@ def build_stats_json(hits):
 def update_gist(stats):
     content = json.dumps(stats, ensure_ascii=False, indent=2)
     payload = json.dumps({"files": {"stats.json": {"content": content}}}).encode()
-    req = urllib.request.Request(
-        f"https://api.github.com/gists/{GIST_ID}",
-        data=payload,
-        method="PATCH",
-        headers={
-            "Authorization": f"Bearer {GIST_TOKEN}",
-            "Accept": "application/vnd.github+json",
-            "Content-Type": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        resp.read()
+
+    def _do():
+        req = urllib.request.Request(
+            f"https://api.github.com/gists/{GIST_ID}",
+            data=payload,
+            method="PATCH",
+            headers={
+                "Authorization": f"Bearer {GIST_TOKEN}",
+                "Accept": "application/vnd.github+json",
+                "Content-Type": "application/json",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            resp.read()
+
+    with_retries(_do)
 
 
 def main():
