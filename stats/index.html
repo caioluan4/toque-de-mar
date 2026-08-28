@@ -412,6 +412,8 @@
       dateApply.classList.remove('active');
       clearAdvancedError();
       clearCalSelection();
+      advancedPanel.classList.remove('open');
+      advancedToggle.classList.remove('open');
       currentPeriod = btn.getAttribute('data-period');
       renderDashboard();
     });
@@ -494,6 +496,8 @@
     monthApply.classList.remove('active');
     dateApply.classList.remove('active');
     clearAdvancedError();
+    advancedPanel.classList.remove('open');
+    advancedToggle.classList.remove('open');
 
     currentPeriod = 'range:' + startIso + ':' + endIso;
     calSelection.activeStart = startIso;
