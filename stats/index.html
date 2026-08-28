@@ -83,13 +83,15 @@
     width: 110px;
   }
   .date-input:hover, .date-input:focus { border-color: rgba(255,255,255,.6); outline: none; }
-  .calendar-btn {
-    position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
-    background: transparent; border: none; color: rgba(255,255,255,.6); padding: 2px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+  .calendar-icon {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    color: rgba(255,255,255,.6); pointer-events: none; display: flex; z-index: 1;
   }
-  .calendar-btn:hover { color: #fff; }
-  .calendar-hidden { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; border: none; }
+  .date-field:hover .calendar-icon { color: #fff; }
+  .calendar-native {
+    position: absolute; right: 0; top: 0; width: 26px; height: 100%;
+    opacity: 0; cursor: pointer; border: none; padding: 0; margin: 0; color-scheme: dark; z-index: 2;
+  }
   .date-sep { font-size: 10px; color: rgba(255,255,255,.5); text-transform: uppercase; }
   .date-apply {
     background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
@@ -167,18 +169,18 @@
       <span class="date-range">
         <span class="date-field">
           <input type="text" class="date-input" id="date-start" placeholder="dd/mm/aaaa" inputmode="numeric" maxlength="10" autocomplete="off">
-          <button type="button" class="calendar-btn" id="calendar-start" aria-label="Escolher data pelo calendário">
+          <span class="calendar-icon" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <input type="date" class="calendar-hidden" id="calendar-start-input" tabindex="-1" aria-hidden="true">
+          </span>
+          <input type="date" class="calendar-native" id="calendar-start-input" aria-label="Escolher data pelo calendário">
         </span>
         <span class="date-sep">até</span>
         <span class="date-field">
           <input type="text" class="date-input" id="date-end" placeholder="dd/mm/aaaa" inputmode="numeric" maxlength="10" autocomplete="off">
-          <button type="button" class="calendar-btn" id="calendar-end" aria-label="Escolher data pelo calendário">
+          <span class="calendar-icon" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <input type="date" class="calendar-hidden" id="calendar-end-input" tabindex="-1" aria-hidden="true">
+          </span>
+          <input type="date" class="calendar-native" id="calendar-end-input" aria-label="Escolher data pelo calendário">
         </span>
         <button type="button" class="date-apply" id="date-apply">Aplicar</button>
       </span>
@@ -291,23 +293,17 @@
     return parts[2] + '/' + parts[1] + '/' + parts[0];
   }
 
-  // Botao de calendario: abre o seletor nativo e preenche o campo de texto ao escolher
-  [['calendar-start', 'calendar-start-input', dateStart], ['calendar-end', 'calendar-end-input', dateEnd]].forEach(function (cfg) {
-    var btn = document.getElementById(cfg[0]);
-    var hiddenInput = document.getElementById(cfg[1]);
-    var textInput = cfg[2];
-    btn.addEventListener('click', function () {
+  // Input nativo de data (invisivel, sobre o icone) abre o calendario do navegador ao ser clicado
+  // diretamente; ao escolher uma data, preenche o campo de texto correspondente.
+  [['calendar-start-input', dateStart], ['calendar-end-input', dateEnd]].forEach(function (cfg) {
+    var nativeInput = document.getElementById(cfg[0]);
+    var textInput = cfg[1];
+    nativeInput.addEventListener('focus', function () {
       var iso = parseBrDate(textInput.value);
-      if (iso) hiddenInput.value = iso;
-      if (hiddenInput.showPicker) {
-        hiddenInput.showPicker();
-      } else {
-        hiddenInput.focus();
-        hiddenInput.click();
-      }
+      nativeInput.value = iso || '';
     });
-    hiddenInput.addEventListener('change', function () {
-      if (hiddenInput.value) textInput.value = brFromIso(hiddenInput.value);
+    nativeInput.addEventListener('change', function () {
+      if (nativeInput.value) textInput.value = brFromIso(nativeInput.value);
     });
   });
 
