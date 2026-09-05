@@ -300,7 +300,8 @@
   var GIST_ID = '245337becc52e524000498c7067c21f4';
   var CORRECT_HASH = "5b0435c4cb418f242802f1d38927f63d4f359ee0f9574d79fc46e34f46f28053";
 
-  var PAGE_PATHS = ['/', '/links/'];
+  var PAGE_PATH = '/links/';
+  var BASELINE_DAYS = {"2026-08-28":2,"2026-08-29":65,"2026-08-30":29,"2026-08-31":39,"2026-09-01":69,"2026-09-02":50,"2026-09-03":60,"2026-09-04":70,"2026-09-05":27};
   var EVENTS = [
     ['whatsapp-pedido', 'WhatsApp'],
     ['delivery-ifood', 'iFood'],
@@ -463,12 +464,12 @@
   var calSelection = { pendingStart: null, activeStart: null, activeEnd: null, rangeMode: false };
 
   function getPageDays() {
-    if (!STATS || !STATS.items) return {};
-    var targets = PAGE_PATHS.map(normPath);
-    var merged = {};
+    if (!STATS || !STATS.items) return Object.assign({}, BASELINE_DAYS);
+    var target = normPath(PAGE_PATH);
+    var merged = Object.assign({}, BASELINE_DAYS);
     for (var i = 0; i < STATS.items.length; i++) {
       var item = STATS.items[i];
-      if (!item.event && targets.indexOf(normPath(item.path)) !== -1) {
+      if (!item.event && normPath(item.path) === target) {
         var days = item.days || {};
         for (var d in days) merged[d] = (merged[d] || 0) + days[d];
       }
@@ -719,9 +720,12 @@
   function renderDashboard() {
     var period = resolvePeriod();
     if (!period) return;
-    var totalVisits = 0;
-    PAGE_PATHS.forEach(function (p) { totalVisits += findCount(period.pages, p); });
-    document.getElementById('page-visits').textContent = totalVisits;
+    var range = getRange(currentPeriod);
+    var baselineTotal = 0;
+    for (var d in BASELINE_DAYS) {
+      if (range[0] === null || (d >= range[0] && d <= range[1])) baselineTotal += BASELINE_DAYS[d];
+    }
+    document.getElementById('page-visits').textContent = baselineTotal + findCount(period.pages, PAGE_PATH);
     renderMetricList('page-events', EVENTS, period.events);
   }
 
