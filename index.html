@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toque de Mar — Salgados Gourmet de Frutos do Mar | Águas Claras, Brasília</title>
+<meta name="description" content="Salgados gourmet de frutos do mar feitos à mão. Coxinhas, empadas e tortas de camarão, bacalhau e siri. Pedidos pelo WhatsApp em Águas Claras, Brasília/DF.">
+<meta property="og:title" content="Toque de Mar — Salgados Gourmet">
+<meta property="og:description" content="Transformamos frutos do mar em delícias empanadas e assadas.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/logo-color.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{ --azul:#214E80; --teal:#00848F; --claro:#7FD8DE; --ink:#F7F6F2; }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#143354;color:var(--ink);font-family:'Outfit',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:#fff;text-decoration:none}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.022em}
+p{margin:0}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0;color:var(--claro)}
+.bg,.tint,.veil{position:fixed;inset:0}
+.bg{background:url('assets/loja-bg.jpg') center/cover;z-index:0}
+.tint{background:#1B4470;opacity:.93;z-index:1}
+.veil{z-index:2;background:radial-gradient(120% 70% at 50% 6%,rgba(0,132,143,.3) 0%,rgba(12,32,54,0) 58%),linear-gradient(180deg,rgba(10,28,48,.42) 0%,rgba(10,28,48,0) 28%,rgba(10,28,48,.5) 100%)}
+.page{position:relative;z-index:3}
+.wrap{max-width:1060px;margin:0 auto}
+section{scroll-margin-top:120px}
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(20,45,72,.78);border-bottom:1px solid rgba(255,255,255,.12)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 18px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:28px;width:auto}
+.brand span{font-size:14.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.95);white-space:nowrap}
+nav{display:flex;gap:8px;padding:0 18px 11px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:9px 15px;font-size:12.5px;font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,.82);white-space:nowrap;transition:background .16s,color .16s}
+nav a:hover{background:rgba(255,255,255,.14);color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:12px;padding:19px 22px;font-family:inherit;font-size:13.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s,color .16s}
+.btn:hover{box-shadow:0 10px 24px rgba(6,22,40,.28)}
+.btn.solid{background:var(--teal);color:#fff}
+.btn.solid:hover{background:#00707A}
+.btn.light{background:rgba(255,255,255,.93);color:#1B4470}
+.btn.light:hover{background:#fff}
+.btn.ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.42);color:#fff}
+.btn.ghost:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.7)}
+.btn.sm{padding:11px 18px;font-size:12.5px;border-radius:10px}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:58px 26px 70px}
+.hero>img{width:146px}
+.eyebrow{color:var(--claro);font-size:11.5px;font-weight:500;letter-spacing:.42em;text-transform:uppercase}
+.hero .eyebrow{margin-top:24px;color:rgba(255,255,255,.9);font-size:12px}
+.hero h1{margin-top:18px;max-width:17ch;font-size:clamp(38px,9.6vw,68px);line-height:1.04;letter-spacing:-.025em}
+.hero .lead{margin-top:20px;max-width:38ch;color:rgba(255,255,255,.82);font-size:clamp(16px,4.3vw,19px);font-weight:300;line-height:1.6;text-wrap:pretty}
+.cta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;width:100%;max-width:440px;margin-top:32px}
+.cta-row .btn{flex:1 1 190px}
+.meta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 18px;margin-top:28px;color:rgba(255,255,255,.66);font-size:13.5px;font-weight:300}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35)}
+.sec{padding:0 22px 74px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px}
+.sec-head h2{max-width:22ch;font-size:clamp(27px,6.6vw,40px);line-height:1.14;letter-spacing:-.02em}
+.sec-head p{flex:1 1 260px;color:rgba(255,255,255,.72);font-size:15px;font-weight:300;line-height:1.65;text-wrap:pretty}
+.center{text-align:center}
+.center h2{margin:0 auto;max-width:20ch;font-size:clamp(28px,7vw,44px);line-height:1.12}
+.hint{margin:10px auto 30px;max-width:40ch;color:rgba(255,255,255,.66);font-size:14.5px;font-weight:300;line-height:1.6}
+.row{display:flex;flex-wrap:wrap;gap:14px}
+.frame{position:relative;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.07)}
+.frame.big{flex:2 1 420px;min-width:0;aspect-ratio:16/10}
+.stack{display:flex;flex:1 1 220px;min-width:0;flex-direction:column;gap:14px}
+.stack .frame{flex:1 1 0;min-height:150px}
+.ph{width:100%;height:100%;object-fit:cover}
+.ph.miss{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 12px,rgba(255,255,255,.09) 12px 24px);min-height:100%;font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;text-align:center;padding:16px}
+.card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:16px;backdrop-filter:blur(6px);transition:background .2s,transform .2s}
+.card:hover{background:rgba(255,255,255,.13);transform:translateY(-3px)}
+.fam{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;overflow:hidden}
+.shot{position:relative;width:100%;aspect-ratio:4/3;background:rgba(255,255,255,.06)}
+.shot .pane{position:absolute;inset:0;display:none}
+.shot .pane.on{display:block}
+.tag{position:absolute;left:13px;top:13px;z-index:3;background:var(--teal);color:#fff;border-radius:7px;padding:6px 12px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.body{display:flex;flex-direction:column;flex:1 1 auto;padding:20px 20px 18px}
+.txt{min-height:104px}
+.txt .pane{display:none}
+.txt .pane.on{display:block}
+.txt h3{margin-bottom:7px;font-size:18.5px}
+.txt p{color:rgba(255,255,255,.74);font-size:14px;font-weight:300;line-height:1.6;text-wrap:pretty}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.count{color:rgba(255,255,255,.58);font-size:12.5px;letter-spacing:.12em}
+.arrows{display:flex;gap:8px}
+.arrow{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:14px;font-family:inherit;cursor:pointer;transition:background .16s,border-color .16s}
+.arrow:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.7)}
+.score{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 22px;margin-bottom:26px;text-align:center}
+.score b{font-size:clamp(38px,10vw,56px);font-weight:600;letter-spacing:-.03em;line-height:1}
+.score .st{color:var(--claro);font-size:19px;letter-spacing:.08em}
+.score p{color:rgba(255,255,255,.72);font-size:14.5px;font-weight:300;line-height:1.5}
+.review{flex:1 1 280px;min-width:0;padding:26px 24px 28px}
+.review .stars{color:var(--claro);font-size:15px;letter-spacing:.1em;margin-bottom:12px}
+.review .quote{font-size:15.5px;font-weight:300;line-height:1.65;color:rgba(255,255,255,.88);margin-bottom:18px;text-wrap:pretty}
+.review .who{color:rgba(255,255,255,.6);font-size:13px}
+.info{flex:1 1 320px;min-width:0;border-radius:20px;padding:34px 28px 36px}
+.info h2{margin-bottom:26px;font-size:clamp(27px,6.6vw,38px);line-height:1.12}
+.info dl{display:flex;flex-direction:column;gap:18px;margin:0}
+.info dt{color:rgba(255,255,255,.6);font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;margin-bottom:5px}
+.info dd{margin:0;font-size:16.5px;font-weight:300;line-height:1.55}
+.info .row{margin-top:28px}
+.info .row .btn{flex:1 1 145px;padding:16px 20px;font-size:12.5px}
+.map{position:relative;flex:1 1 300px;min-width:0;min-height:320px;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.07)}
+.final{max-width:1060px;margin:0 auto;background:var(--teal);border-radius:22px;padding:52px 30px 54px;text-align:center;box-shadow:0 18px 44px rgba(0,132,143,.28)}
+.final h2{margin:0 auto;max-width:20ch;font-size:clamp(28px,7.2vw,44px);line-height:1.12;letter-spacing:-.025em}
+.final .serif{color:#fff}
+.final p{margin:18px auto 0;max-width:42ch;color:rgba(255,255,255,.88);font-size:16.5px;font-weight:300;line-height:1.6;text-wrap:pretty}
+.final .cta-row{max-width:520px;margin:32px auto 0}
+.final .cta-row .btn{flex:1 1 205px}
+.final .btn.light{background:#fff;color:#00646E}
+.final .btn.ghost{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.6)}
+footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);backdrop-filter:blur(8px);padding:48px 22px 30px}
+.fgrid{display:flex;flex-wrap:wrap;gap:34px 40px}
+.fcol{flex:1 1 150px;min-width:0}
+.fcol.lead-col{flex:1 1 260px}
+.fcol h4{margin:0 0 14px;color:rgba(255,255,255,.5);font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase}
+.fcol .links{display:flex;flex-direction:column;gap:10px;font-size:14.5px;font-weight:300}
+.fcol .links a{color:rgba(255,255,255,.66);transition:color .16s}
+.fcol .links a:hover{color:#fff}
+.fcol .addr{color:rgba(255,255,255,.66);font-size:14.5px;font-weight:300;line-height:1.65}
+.fbrand{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.fbrand img{height:34px;width:auto}
+.fbrand span{font-size:15px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.92)}
+.socs{display:flex;gap:10px;margin-top:20px}
+.soc{width:42px;height:42px;border-radius:11px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s}
+.soc:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.78)}
+.soc svg{width:18px;height:18px}
+.legal{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.legal p{color:rgba(255,255,255,.45);font-size:12.5px}
+@media (max-width:600px){ .sec{padding:0 18px 60px} }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="tint"></div><div class="veil"></div>
+
+<div class="page">
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#topo"><img src="assets/logo-white.png" alt="Toque de Mar"><span>Toque de Mar</span></a>
+    <a class="btn solid sm" href="https://wa.me/5561999023013?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Toque%20de%20Mar%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">Pedir</a>
+  </div>
+  <nav class="wrap">
+    <a href="#loja">A loja</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#avaliacoes">Avaliações</a>
+    <a href="#local">Onde estamos</a>
+    <a href="https://app.cardapioweb.com/toque_de_mar" target="_blank" rel="noopener">Cardápio</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="topo">
+  <img src="assets/logo-white.png" alt="">
+  <p class="eyebrow">Salgados Gourmet</p>
+  <h1>Frutos do mar em forma de <span class="serif">salgado</span></h1>
+  <p class="lead">Transformamos frutos do mar em delícias empanadas e assadas.</p>
+  <div class="cta-row">
+    <a class="btn solid" href="https://wa.me/5561999023013?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Toque%20de%20Mar%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">Pedir no WhatsApp <span>→</span></a>
+    <a class="btn light" href="https://app.cardapioweb.com/toque_de_mar" target="_blank" rel="noopener">Cardápio digital <span>→</span></a>
+  </div>
+  <div class="meta"><span>Águas Claras, Brasília/DF</span><span class="dot"></span><span>Ter a Dom · 11h às 22h</span><span class="dot"></span><span style="color:var(--claro)">★ 4,9 no Google</span></div>
+</section>
+
+<section class="sec" id="loja">
+  <div class="wrap">
+    <div class="sec-head">
+      <div style="flex:1 1 300px;min-width:0">
+        <p class="eyebrow" style="margin-bottom:12px">A loja</p>
+        <h2>Um balcão pensado para <span class="serif">olhar com calma</span></h2>
+      </div>
+      <p>Vitrine cheia o dia inteiro, salgados saindo do forno e da fritadeira a cada rodada. Dá para comer ali mesmo ou levar a bandeja montada.</p>
+    </div>
+    <div class="row">
+      <div class="frame big"><img class="ph" src="fotos/loja-1.jpg" alt="Interior da loja" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Interior da loja'"></div>
+      <div class="stack">
+        <div class="frame"><img class="ph" src="fotos/loja-2.jpg" alt="Vitrine de salgados" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Vitrine de salgados'"></div>
+        <div class="frame"><img class="ph" src="fotos/loja-3.jpg" alt="Balcão e atendimento" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Balcão e atendimento'"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="produtos">
+  <div class="wrap center">
+    <p class="eyebrow">O cardápio</p>
+    <h2 style="margin-top:12px">Sabores que saem do nosso balcão</h2>
+    <p class="hint">Use as setas em cada card para passar pelos sabores.</p>
+    <div class="row" style="text-align:left">
+      <article class="card fam" data-fam="coxinha" data-n="4">
+          <div class="shot">
+            <div class="pane on" data-i="0"><img class="ph" src="fotos/coxinha-camarao.jpg" alt="Coxinha de Camarão com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Camarão com catupiry'"></div>
+            <div class="pane" data-i="1"><img class="ph" src="fotos/coxinha-bacalhau.jpg" alt="Coxinha de Bacalhau" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Bacalhau'"></div>
+            <div class="pane" data-i="2"><img class="ph" src="fotos/coxinha-siri.jpg" alt="Coxinha de Siri" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Siri'"></div>
+            <div class="pane" data-i="3"><img class="ph" src="fotos/coxinha-frango.jpg" alt="Coxinha de Frango com requeijão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Frango com requeijão'"></div>
+            <span class="tag">Coxinha</span>
+          </div>
+          <div class="body">
+            <div class="txt">
+              <div class="pane on" data-i="0"><h3>Camarão com catupiry</h3><p>Camarão inteiro refogado, catupiry cremoso e massa leve. O carro-chefe da casa.</p></div>
+              <div class="pane" data-i="1"><h3>Bacalhau</h3><p>Bacalhau em lascas com azeite português, batata e cebola.</p></div>
+              <div class="pane" data-i="2"><h3>Siri</h3><p>Siri desfiado no tempero da casa, com leve toque de pimenta.</p></div>
+              <div class="pane" data-i="3"><h3>Frango com requeijão</h3><p>A clássica, para quem não é do time dos frutos do mar.</p></div>
+            </div>
+            <div class="pager">
+              <span class="count">01 / 04</span>
+              <span class="arrows">
+                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior">←</button>
+                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor">→</button>
+              </span>
+            </div>
+          </div>
+        </article>
+      <article class="card fam" data-fam="empada" data-n="4">
+          <div class="shot">
+            <div class="pane on" data-i="0"><img class="ph" src="fotos/empada-camarao.jpg" alt="Empada de Camarão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Camarão'"></div>
+            <div class="pane" data-i="1"><img class="ph" src="fotos/empada-bacalhau.jpg" alt="Empada de Bacalhau" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Bacalhau'"></div>
+            <div class="pane" data-i="2"><img class="ph" src="fotos/empada-palmito.jpg" alt="Empada de Palmito" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Palmito'"></div>
+            <div class="pane" data-i="3"><img class="ph" src="fotos/empada-frango.jpg" alt="Empada de Frango" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Frango'"></div>
+            <span class="tag">Empada</span>
+          </div>
+          <div class="body">
+            <div class="txt">
+              <div class="pane on" data-i="0"><h3>Camarão</h3><p>Massa amanteigada assada no dia, recheio cremoso com tomate e cheiro-verde.</p></div>
+              <div class="pane" data-i="1"><h3>Bacalhau</h3><p>Lascas de bacalhau, cebola caramelizada e azeitona.</p></div>
+              <div class="pane" data-i="2"><h3>Palmito</h3><p>Palmito pupunha em cubos, creme leve e cheiro-verde.</p></div>
+              <div class="pane" data-i="3"><h3>Frango</h3><p>Frango desfiado com milho e requeijão.</p></div>
+            </div>
+            <div class="pager">
+              <span class="count">01 / 04</span>
+              <span class="arrows">
+                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior">←</button>
+                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor">→</button>
+              </span>
+            </div>
+          </div>
+        </article>
+      <article class="card fam" data-fam="torta" data-n="4">
+          <div class="shot">
+            <div class="pane on" data-i="0"><img class="ph" src="fotos/torta-camarao.jpg" alt="Torta de Camarão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Camarão'"></div>
+            <div class="pane" data-i="1"><img class="ph" src="fotos/torta-bacalhau.jpg" alt="Torta de Bacalhau" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Bacalhau'"></div>
+            <div class="pane" data-i="2"><img class="ph" src="fotos/torta-frango.jpg" alt="Torta de Frango com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Frango com catupiry'"></div>
+            <div class="pane" data-i="3"><img class="ph" src="fotos/torta-palmito.jpg" alt="Torta de Palmito" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Palmito'"></div>
+            <span class="tag">Torta</span>
+          </div>
+          <div class="body">
+            <div class="txt">
+              <div class="pane on" data-i="0"><h3>Camarão</h3><p>Fatia generosa com recheio cremoso e palmito. Inteira por encomenda.</p></div>
+              <div class="pane" data-i="1"><h3>Bacalhau</h3><p>Bacalhau desfiado com batata e azeitona, gratinada no forno.</p></div>
+              <div class="pane" data-i="2"><h3>Frango com catupiry</h3><p>Recheio bem cremoso, massa que desmancha na boca.</p></div>
+              <div class="pane" data-i="3"><h3>Palmito</h3><p>Opção vegetariana, com palmito fresco e creme de milho.</p></div>
+            </div>
+            <div class="pager">
+              <span class="count">01 / 04</span>
+              <span class="arrows">
+                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior">←</button>
+                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor">→</button>
+              </span>
+            </div>
+          </div>
+        </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="avaliacoes">
+  <div class="wrap">
+    <div class="score">
+      <div style="display:flex;align-items:baseline;gap:10px"><b>4,9</b><span class="st">★★★★★</span></div>
+      <p>Média das avaliações no Google<br>com base em 180+ avaliações</p>
+    </div>
+    <div class="row">
+      <article class="card review"><p class="stars">★★★★★</p><p class="quote">A coxinha de camarão é outro nível — recheio de verdade, dá para ver o camarão. Virei cliente da casa.</p><p class="who">Renata M. · Google</p></article>
+      <article class="card review"><p class="stars">★★★★★</p><p class="quote">Pedi bandeja para um aniversário e acabou antes de todo mundo chegar. Atendimento impecável no WhatsApp.</p><p class="who">Thiago A. · Google</p></article>
+      <article class="card review"><p class="stars">★★★★★</p><p class="quote">Loja limpa, vitrine linda e tudo fresco. A empada de camarão é a melhor de Águas Claras.</p><p class="who">Carla V. · Google</p></article>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:24px"><a class="btn ghost" style="padding:15px 24px;font-size:12.5px" href="https://www.google.com/maps/search/?api=1&query=Toque%20de%20Mar%2C%20R.%205%20Norte%2C%204%20-%20Lj%208%2C%20%C3%81guas%20Claras%2C%20Bras%C3%ADlia%20-%20DF%2C%2071907-720" target="_blank" rel="noopener">Ver no Google</a></div>
+  </div>
+</section>
+
+<section class="sec" id="local">
+  <div class="wrap row" style="align-items:stretch">
+    <div class="card info">
+      <p class="eyebrow" style="margin-bottom:12px">Onde nos achar</p>
+      <h2>Águas Claras, Brasília</h2>
+      <dl>
+        <div><dt>Endereço</dt><dd>R. 5 Norte, 4 — Loja 8<br>Ed. Modern Life · 71907-720</dd></div>
+        <div><dt>Horário</dt><dd>Ter a Dom · 11h às 22h</dd></div>
+        <div><dt>Telefone</dt><dd>(61) 99902-3013</dd></div>
+      </dl>
+      <div class="row">
+        <a class="btn light" href="https://www.google.com/maps/search/?api=1&query=Toque%20de%20Mar%2C%20R.%205%20Norte%2C%204%20-%20Lj%208%2C%20%C3%81guas%20Claras%2C%20Bras%C3%ADlia%20-%20DF%2C%2071907-720" target="_blank" rel="noopener">Google Maps</a>
+        <a class="btn ghost" href="https://waze.com/ul?q=Toque%20de%20Mar%2C%20R.%205%20Norte%2C%204%20-%20Lj%208%2C%20%C3%81guas%20Claras%2C%20Bras%C3%ADlia%20-%20DF%2C%2071907-720&navigate=yes" target="_blank" rel="noopener">Waze</a>
+      </div>
+    </div>
+    <div class="map"><img class="ph" src="fotos/fachada.jpg" alt="Fachada da loja" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Fachada da loja'"></div>
+  </div>
+</section>
+
+<section class="sec" style="padding-bottom:60px">
+  <div class="final">
+    <h2>Bateu a vontade de <span class="serif">frutos do mar?</span></h2>
+    <p>Encomendas para retirada, bandejas para festa e congelados. Chame no WhatsApp que a gente monta o pedido com você.</p>
+    <div class="cta-row">
+      <a class="btn light" href="https://wa.me/5561999023013?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Toque%20de%20Mar%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">Falar no WhatsApp</a>
+      <a class="btn ghost" href="https://app.cardapioweb.com/toque_de_mar" target="_blank" rel="noopener">Cardápio digital</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap fgrid">
+    <div class="fcol lead-col">
+      <div class="fbrand"><img src="assets/logo-white.png" alt=""><span>Toque de Mar</span></div>
+      <p class="addr" style="max-width:34ch">Salgados gourmet de frutos do mar, feitos à mão todos os dias em Águas Claras.</p>
+      <div class="socs">
+        <a class="soc" href="https://www.instagram.com/toquedemaroficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="16.7" cy="7.3" r="1" fill="currentColor"/></svg></a>
+        <a class="soc" href="https://wa.me/5561999023013?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Toque%20de%20Mar%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none"><path d="M17.6 6.3A8.9 8.9 0 0 0 12 3.9a8.9 8.9 0 0 0-7.7 13.4L3 21l3.9-1.3A8.9 8.9 0 0 0 20.9 12a8.9 8.9 0 0 0-3.3-5.7Z" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a class="soc" href="tel:+5561999023013" aria-label="Telefone"><svg viewBox="0 0 24 24" fill="none"><path d="M6.5 3.8h3l1.4 3.6-2 1.5a11 11 0 0 0 5.2 5.2l1.5-2 3.6 1.4v3a1.8 1.8 0 0 1-2 1.8C10.4 18 6 13.6 4.7 5.8a1.8 1.8 0 0 1 1.8-2Z" stroke="currentColor" stroke-width="1.5"/></svg></a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Navegue</h4>
+      <div class="links"><a href="#loja">A loja</a><a href="#produtos">Produtos</a><a href="#avaliacoes">Avaliações</a><a href="#local">Onde estamos</a></div>
+    </div>
+    <div class="fcol">
+      <h4>Pedidos</h4>
+      <div class="links"><a href="https://wa.me/5561999023013?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Toque%20de%20Mar%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">WhatsApp</a><a href="https://app.cardapioweb.com/toque_de_mar" target="_blank" rel="noopener">Cardápio digital</a><a href="https://www.instagram.com/toquedemaroficial/" target="_blank" rel="noopener">Instagram</a><a href="https://www.google.com/maps/search/?api=1&query=Toque%20de%20Mar%2C%20R.%205%20Norte%2C%204%20-%20Lj%208%2C%20%C3%81guas%20Claras%2C%20Bras%C3%ADlia%20-%20DF%2C%2071907-720" target="_blank" rel="noopener">Como chegar</a></div>
+    </div>
+    <div class="fcol" style="flex:1 1 200px">
+      <h4>Visite</h4>
+      <p class="addr" style="margin-bottom:12px">R. 5 Norte, 4 — Loja 8<br>Ed. Modern Life · Águas Claras<br>Brasília/DF · 71907-720</p>
+      <p class="addr">Ter a Dom · 11h às 22h<br>(61) 99902-3013</p>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>© 2026 Toque de Mar · Todos os direitos reservados</p>
+    <p>Águas Claras · Brasília/DF</p>
+  </div>
+</footer>
+</div>
+
+<script>
+document.querySelectorAll('.fam').forEach(function(card){
+  var n = +card.dataset.n, i = 0;
+  var shots = card.querySelectorAll('.shot .pane');
+  var txts  = card.querySelectorAll('.txt .pane');
+  var count = card.querySelector('.count');
+  var pad = function(v){ return String(v).padStart(2,'0'); };
+  function show(k){
+    i = (k + n) % n;
+    shots.forEach(function(p,x){ p.classList.toggle('on', x===i); });
+    txts.forEach(function(p,x){ p.classList.toggle('on', x===i); });
+    count.textContent = pad(i+1) + ' / ' + pad(n);
+  }
+  card.querySelectorAll('.arrow').forEach(function(b){
+    b.addEventListener('click', function(){ show(i + (+b.dataset.dir)); });
+  });
+  var x0 = null;
+  card.querySelector('.shot').addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  card.querySelector('.shot').addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+});
+</script>
+</body>
+</html>
