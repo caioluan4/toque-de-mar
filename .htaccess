@@ -1,0 +1,3 @@
+# Provisório: domínio principal aponta pro linktree enquanto a landing page não sobe.
+# Remover este redirect quando a LP for publicada no domínio principal.
+RedirectMatch 302 ^/$ /links/
