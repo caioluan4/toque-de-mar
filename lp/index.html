@@ -427,29 +427,31 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     var track = document.getElementById('reviewTrack');
     var dotsWrap = document.getElementById('reviewDots');
     var cards = track.querySelectorAll('.card.review');
+    var current = 0;
     cards.forEach(function(_, i){
       var d = document.createElement('button');
       d.type = 'button';
       d.className = 'car-dot' + (i === 0 ? ' active' : '');
       d.setAttribute('aria-label', 'Ir para avaliação ' + (i + 1));
-      d.onclick = function(){ cards[i].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'}); };
+      d.onclick = function(){ goTo(i); };
       dotsWrap.appendChild(d);
     });
     var dots = dotsWrap.querySelectorAll('.car-dot');
-    function updateActive(){
+    function updateActiveFromScroll(){
       var min = Infinity, closest = 0;
       cards.forEach(function(c, i){
         var diff = Math.abs(c.getBoundingClientRect().left - track.getBoundingClientRect().left);
         if (diff < min) { min = diff; closest = i; }
       });
+      current = closest;
       dots.forEach(function(d, i){ d.classList.toggle('active', i === closest); });
     }
-    track.addEventListener('scroll', function(){ requestAnimationFrame(updateActive); });
-    window.reviewNav = function(dir){
-      var card = cards[0];
-      var gap = 20;
-      track.scrollBy({left: dir * (card.offsetWidth + gap), behavior:'smooth'});
-    };
+    function goTo(i){
+      current = (i + cards.length) % cards.length;
+      cards[current].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
+    }
+    track.addEventListener('scroll', function(){ requestAnimationFrame(updateActiveFromScroll); });
+    window.reviewNav = function(dir){ goTo(current + dir); };
   })();
 </script>
 
