@@ -114,10 +114,19 @@ nav a:hover{color:#fff}
 .score b{font-size:clamp(38px,10vw,56px);font-weight:600;letter-spacing:-.03em;line-height:1}
 .score .st{color:var(--claro);font-size:19px;letter-spacing:.08em}
 .score p{color:rgba(255,255,255,.72);font-size:14.5px;font-weight:300;line-height:1.5}
-.review{flex:1 1 280px;min-width:0;padding:26px 24px 28px}
+.review{padding:26px 24px 28px}
 .review .stars{color:var(--claro);font-size:15px;letter-spacing:.1em;margin-bottom:12px}
 .review .quote{font-size:15.5px;font-weight:300;line-height:1.65;color:rgba(255,255,255,.88);margin-bottom:18px;text-wrap:pretty}
 .review .who{color:rgba(255,255,255,.6);font-size:13px}
+.carousel{display:flex;align-items:center;gap:14px}
+.car-track{flex:1 1 auto;display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 4px;-ms-overflow-style:none;scrollbar-width:none}
+.car-track::-webkit-scrollbar{display:none}
+.car-track .card.review{scroll-snap-align:start;flex:0 0 100%}
+@media (min-width:760px){.car-track .card.review{flex:0 0 calc(33.333% - 14px)}}
+.car-arrow{flex:none;width:40px;height:40px;border-radius:50%}
+.car-dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.car-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;border:none;padding:0;transition:background .16s,transform .16s}
+.car-dot.active{background:var(--claro);transform:scale(1.3)}
 .info{flex:1 1 320px;min-width:0;border-radius:20px;padding:34px 28px 36px}
 .info h2{margin-bottom:26px;font-size:clamp(27px,6.6vw,38px);line-height:1.12}
 .info dl{display:flex;flex-direction:column;gap:18px;margin:0}
@@ -300,15 +309,24 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
 
 <section class="sec" id="avaliacoes">
   <div class="wrap">
+    <div class="center" style="margin-bottom:28px">
+      <p class="eyebrow">Avaliações de clientes</p>
+      <h2 style="margin-top:12px">O que nossos <span class="serif">clientes dizem</span></h2>
+    </div>
     <div class="score">
       <div style="display:flex;align-items:baseline;gap:10px"><b>4,9</b><span class="st">★★★★★</span></div>
       <p>Média das avaliações no Google<br>com base em 180+ avaliações</p>
     </div>
-    <div class="row">
-      <article class="card review"><p class="stars">★★★★★</p><p class="quote">A coxinha de camarão é outro nível — recheio de verdade, dá para ver o camarão. Virei cliente da casa.</p><p class="who">Renata M. · Google</p></article>
-      <article class="card review"><p class="stars">★★★★★</p><p class="quote">Pedi bandeja para um aniversário e acabou antes de todo mundo chegar. Atendimento impecável no WhatsApp.</p><p class="who">Thiago A. · Google</p></article>
-      <article class="card review"><p class="stars">★★★★★</p><p class="quote">Loja limpa, vitrine linda e tudo fresco. A empada de camarão é a melhor de Águas Claras.</p><p class="who">Carla V. · Google</p></article>
+    <div class="carousel">
+      <button type="button" class="arrow car-arrow" onclick="reviewNav(-1)" aria-label="Avaliação anterior">‹</button>
+      <div class="car-track" id="reviewTrack">
+        <article class="card review"><p class="stars">★★★★★</p><p class="quote">A coxinha de camarão é outro nível — recheio de verdade, dá para ver o camarão. Virei cliente da casa.</p><p class="who">Renata M. · Google</p></article>
+        <article class="card review"><p class="stars">★★★★★</p><p class="quote">Pedi bandeja para um aniversário e acabou antes de todo mundo chegar. Atendimento impecável no WhatsApp.</p><p class="who">Thiago A. · Google</p></article>
+        <article class="card review"><p class="stars">★★★★★</p><p class="quote">Loja limpa, vitrine linda e tudo fresco. A empada de camarão é a melhor de Águas Claras.</p><p class="who">Carla V. · Google</p></article>
+      </div>
+      <button type="button" class="arrow car-arrow" onclick="reviewNav(1)" aria-label="Próxima avaliação">›</button>
     </div>
+    <div class="car-dots" id="reviewDots"></div>
     <div style="display:flex;justify-content:center;margin-top:24px"><a class="btn ghost" style="padding:15px 24px;font-size:12.5px" href="https://www.google.com/maps/search/?api=1&query=-15.8352732,-48.0115051" target="_blank" rel="noopener">Ver no Google</a></div>
   </div>
 </section>
@@ -400,6 +418,35 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
   function openModal(id,e){ if(e) e.preventDefault(); document.getElementById(id).classList.add('open'); }
   function closeModal(id){ document.getElementById(id).classList.remove('open'); }
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeModal('deliveryOverlay'); closeModal('locOverlay'); } });
+
+  (function(){
+    var track = document.getElementById('reviewTrack');
+    var dotsWrap = document.getElementById('reviewDots');
+    var cards = track.querySelectorAll('.card.review');
+    cards.forEach(function(_, i){
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'car-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Ir para avaliação ' + (i + 1));
+      d.onclick = function(){ cards[i].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'}); };
+      dotsWrap.appendChild(d);
+    });
+    var dots = dotsWrap.querySelectorAll('.car-dot');
+    function updateActive(){
+      var min = Infinity, closest = 0;
+      cards.forEach(function(c, i){
+        var diff = Math.abs(c.getBoundingClientRect().left - track.getBoundingClientRect().left);
+        if (diff < min) { min = diff; closest = i; }
+      });
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === closest); });
+    }
+    track.addEventListener('scroll', function(){ requestAnimationFrame(updateActive); });
+    window.reviewNav = function(dir){
+      var card = cards[0];
+      var gap = 20;
+      track.scrollBy({left: dir * (card.offsetWidth + gap), behavior:'smooth'});
+    };
+  })();
 </script>
 
 <script>
