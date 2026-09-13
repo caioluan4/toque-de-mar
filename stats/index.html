@@ -62,6 +62,14 @@
   .period-btn:hover { border-color: rgba(255,255,255,.6); color: #fff; }
   .period-btn.active { background: #fff; border-color: #fff; color: #1B4470; }
 
+  .page-tab-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: 7px 13px; border-radius: 999px; cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+  }
+  .page-tab-btn:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+  .page-tab-btn.active { background: #00848F; border-color: #00848F; color: #fff; }
+
   .advanced-toggle {
     background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.7);
     font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
@@ -230,6 +238,11 @@
     </div>
   </div>
 
+  <div class="period-filter" id="page-tabs" style="max-width:900px;margin:0 auto 14px">
+    <button type="button" class="page-tab-btn active" data-page="links">Linktree</button>
+    <button type="button" class="page-tab-btn" data-page="lp">Landing Page</button>
+  </div>
+
   <div class="period-filter" id="period-filter" style="max-width:900px;margin:0 auto 20px">
     <button class="period-btn active" data-period="hoje">Hoje</button>
     <button class="period-btn" data-period="ontem">Ontem</button>
@@ -286,7 +299,7 @@
     <div class="tab-panel">
       <div class="visits-block">
         <span class="visits-num" id="page-visits">0</span>
-        <span class="visits-label">visitas no linktree</span>
+        <span class="visits-label" id="page-visits-label">visitas no linktree</span>
       </div>
       <p class="dash-subtitle">Cliques por botão</p>
       <div class="metric-list" id="page-events"></div>
@@ -300,19 +313,44 @@
   var GIST_ID = '245337becc52e524000498c7067c21f4';
   var CORRECT_HASH = "5b0435c4cb418f242802f1d38927f63d4f359ee0f9574d79fc46e34f46f28053";
 
-  var PAGE_PATH = '/links/';
-  var BASELINE_DAYS = {"2026-08-28":2,"2026-08-29":65,"2026-08-30":29,"2026-08-31":39,"2026-09-01":69,"2026-09-02":50,"2026-09-03":60,"2026-09-04":70,"2026-09-05":27};
-  var EVENTS = [
-    ['whatsapp-pedido', 'WhatsApp'],
-    ['delivery-ifood', 'iFood'],
-    ['delivery-cardapio', 'Cardápio Digital'],
-    ['nav-localizacao', 'Localização'],
-    ['loc-google-maps', 'Google Maps'],
-    ['loc-waze', 'Waze'],
-    ['nav-atacado', 'Pedidos Atacado'],
-    ['nav-avalie-google', 'Avalie no Google'],
-    ['social-facebook', 'Facebook']
-  ];
+  var PAGES = {
+    links: {
+      path: '/links/',
+      visitsLabel: 'visitas no linktree',
+      baseline: {"2026-08-28":2,"2026-08-29":65,"2026-08-30":29,"2026-08-31":39,"2026-09-01":69,"2026-09-02":50,"2026-09-03":60,"2026-09-04":70,"2026-09-05":27},
+      events: [
+        ['whatsapp-pedido', 'WhatsApp'],
+        ['delivery-ifood', 'iFood'],
+        ['delivery-cardapio', 'Cardápio Digital'],
+        ['nav-localizacao', 'Localização'],
+        ['loc-google-maps', 'Google Maps'],
+        ['loc-waze', 'Waze'],
+        ['nav-atacado', 'Pedidos Atacado'],
+        ['nav-avalie-google', 'Avalie no Google'],
+        ['social-facebook', 'Facebook']
+      ]
+    },
+    lp: {
+      path: '/lp/',
+      visitsLabel: 'visitas na landing page',
+      baseline: {},
+      events: [
+        ['lp-peca-aqui', 'Peça Aqui'],
+        ['lp-como-chegar', 'Como Chegar'],
+        ['lp-delivery-ifood', 'iFood'],
+        ['lp-delivery-cardapio', 'Cardápio Digital'],
+        ['lp-whatsapp-pedido', 'WhatsApp'],
+        ['lp-loc-google-maps', 'Google Maps'],
+        ['lp-loc-waze', 'Waze'],
+        ['lp-nav-atacado', 'Pedidos Atacado'],
+        ['lp-avalie-google', 'Avalie no Google'],
+        ['lp-social-instagram', 'Instagram'],
+        ['lp-social-facebook', 'Facebook'],
+        ['lp-social-whatsapp', 'WhatsApp (rodapé)']
+      ]
+    }
+  };
+  var currentPage = 'links';
 
   var STATS = null;
   var currentPeriod = 'hoje';
@@ -404,6 +442,17 @@
     });
   });
 
+  document.querySelectorAll('.page-tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.page-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentPage = btn.getAttribute('data-page');
+      clearCalSelection();
+      renderCalendar();
+      renderDashboard();
+    });
+  });
+
   document.querySelectorAll('.period-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.period-btn').forEach(function (b) { b.classList.remove('active'); });
@@ -464,9 +513,10 @@
   var calSelection = { pendingStart: null, activeStart: null, activeEnd: null, rangeMode: false };
 
   function getPageDays() {
-    if (!STATS || !STATS.items) return Object.assign({}, BASELINE_DAYS);
-    var target = normPath(PAGE_PATH);
-    var merged = Object.assign({}, BASELINE_DAYS);
+    var page = PAGES[currentPage];
+    if (!STATS || !STATS.items) return Object.assign({}, page.baseline);
+    var target = normPath(page.path);
+    var merged = Object.assign({}, page.baseline);
     for (var i = 0; i < STATS.items.length; i++) {
       var item = STATS.items[i];
       if (!item.event && normPath(item.path) === target) {
@@ -720,13 +770,15 @@
   function renderDashboard() {
     var period = resolvePeriod();
     if (!period) return;
+    var page = PAGES[currentPage];
     var range = getRange(currentPeriod);
     var baselineTotal = 0;
-    for (var d in BASELINE_DAYS) {
-      if (range[0] === null || (d >= range[0] && d <= range[1])) baselineTotal += BASELINE_DAYS[d];
+    for (var d in page.baseline) {
+      if (range[0] === null || (d >= range[0] && d <= range[1])) baselineTotal += page.baseline[d];
     }
-    document.getElementById('page-visits').textContent = baselineTotal + findCount(period.pages, PAGE_PATH);
-    renderMetricList('page-events', EVENTS, period.events);
+    document.getElementById('page-visits').textContent = baselineTotal + findCount(period.pages, page.path);
+    document.getElementById('page-visits-label').textContent = page.visitsLabel;
+    renderMetricList('page-events', page.events, period.events);
   }
 
   function formatDate(iso) {
