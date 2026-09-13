@@ -107,9 +107,10 @@ nav a:hover{color:#fff}
 .txt p{color:rgba(255,255,255,.74);font-size:14px;font-weight:300;line-height:1.6;text-wrap:pretty}
 .pager{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
 .count{color:rgba(255,255,255,.58);font-size:12.5px;letter-spacing:.12em}
-.arrows{display:flex;gap:8px}
-.arrow{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:14px;font-family:inherit;cursor:pointer;transition:background .16s,border-color .16s}
-.arrow:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.7)}
+.arrows{display:flex;gap:6px}
+.arrow{width:30px;height:30px;background:none;border:none;padding:0;color:rgba(255,255,255,.5);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:color .16s}
+.arrow:hover{color:#fff}
+.arrow svg{width:16px;height:16px}
 .score{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 22px;margin-bottom:26px;text-align:center}
 .score b{font-size:clamp(38px,10vw,56px);font-weight:600;letter-spacing:-.03em;line-height:1}
 .score .st{color:var(--claro);font-size:19px;letter-spacing:.08em}
@@ -230,7 +231,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
 <section class="sec" id="produtos">
   <div class="wrap center">
     <p class="eyebrow">O cardápio</p>
-    <h2 style="margin-top:12px">Conheça nossos sabores</h2>
+    <h2 style="margin-top:12px;margin-bottom:44px">Conheça nossos sabores</h2>
     <div class="row" style="text-align:left">
       <article class="card fam" data-fam="coxinha" data-n="4">
           <div class="shot">
@@ -250,8 +251,8 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
             <div class="pager">
               <span class="count">01 / 04</span>
               <span class="arrows">
-                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior">←</button>
-                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor">→</button>
+                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
               </span>
             </div>
           </div>
@@ -274,8 +275,8 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
             <div class="pager">
               <span class="count">01 / 04</span>
               <span class="arrows">
-                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior">←</button>
-                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor">→</button>
+                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
               </span>
             </div>
           </div>
@@ -298,8 +299,8 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
             <div class="pager">
               <span class="count">01 / 04</span>
               <span class="arrows">
-                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior">←</button>
-                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor">→</button>
+                <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
               </span>
             </div>
           </div>
