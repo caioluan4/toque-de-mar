@@ -126,9 +126,6 @@ nav a:hover{color:#fff}
 @media (min-width:760px){.car-track .card.review{flex:0 0 calc(33.333% - 14px)}}
 .car-arrow{flex:none;width:36px;height:40px;background:none;border:none;font-size:28px;font-weight:300;color:rgba(255,255,255,.5);line-height:1;transition:color .16s}
 .car-arrow:hover{background:none;border-color:transparent;color:#fff}
-.car-dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
-.car-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;border:none;padding:0;transition:background .16s,transform .16s}
-.car-dot.active{background:var(--claro);transform:scale(1.3)}
 .info{flex:1 1 320px;min-width:0;border-radius:20px;padding:34px 28px 36px}
 .info h2{margin-bottom:26px;font-size:clamp(27px,6.6vw,38px);line-height:1.12}
 .info dl{display:flex;flex-direction:column;gap:18px;margin:0}
@@ -331,7 +328,6 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
       </div>
       <button type="button" class="arrow car-arrow" onclick="reviewNav(1)" aria-label="Próxima avaliação">›</button>
     </div>
-    <div class="car-dots" id="reviewDots"></div>
     <div style="display:flex;justify-content:center;margin-top:24px"><a class="btn ghost" style="padding:15px 24px;font-size:12.5px" href="https://www.google.com/search?q=toque+de+mar&sourceid=chrome&ie=UTF-8#lrd=0x935a3380e3b44a49:0xd474f048a5f46045,1,,,," target="_blank" rel="noopener">Ver no Google</a></div>
   </div>
 </section>
@@ -426,33 +422,39 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
 
   (function(){
     var track = document.getElementById('reviewTrack');
-    var dotsWrap = document.getElementById('reviewDots');
-    var cards = track.querySelectorAll('.card.review');
-    var current = 0;
-    cards.forEach(function(_, i){
-      var d = document.createElement('button');
-      d.type = 'button';
-      d.className = 'car-dot' + (i === 0 ? ' active' : '');
-      d.setAttribute('aria-label', 'Ir para avaliação ' + (i + 1));
-      d.onclick = function(){ goTo(i); };
-      dotsWrap.appendChild(d);
+    var originals = Array.prototype.slice.call(track.querySelectorAll('.card.review'));
+    var count = originals.length;
+    var startClones = originals.map(function(c){ var cl = c.cloneNode(true); cl.setAttribute('aria-hidden','true'); return cl; });
+    var endClones = originals.map(function(c){ var cl = c.cloneNode(true); cl.setAttribute('aria-hidden','true'); return cl; });
+    startClones.concat(originals, endClones).forEach(function(el){ track.appendChild(el); });
+    var all = Array.prototype.slice.call(track.querySelectorAll('.card.review'));
+    var current = count; // index of the first real card, inside the middle third of `all`
+
+    function jumpTo(i, smooth){
+      all[i].scrollIntoView({behavior: smooth ? 'smooth' : 'auto', inline: 'start', block: 'nearest'});
+    }
+    jumpTo(current, false);
+
+    var settleTimer;
+    track.addEventListener('scroll', function(){
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function(){
+        var min = Infinity, closest = current;
+        all.forEach(function(c, i){
+          var diff = Math.abs(c.getBoundingClientRect().left - track.getBoundingClientRect().left);
+          if (diff < min) { min = diff; closest = i; }
+        });
+        current = closest;
+        // silently rewrap onto the equivalent real card once we drift into a clone zone
+        if (current < count) { current += count; jumpTo(current, false); }
+        else if (current >= count * 2) { current -= count; jumpTo(current, false); }
+      }, 120);
     });
-    var dots = dotsWrap.querySelectorAll('.car-dot');
-    function updateActiveFromScroll(){
-      var min = Infinity, closest = 0;
-      cards.forEach(function(c, i){
-        var diff = Math.abs(c.getBoundingClientRect().left - track.getBoundingClientRect().left);
-        if (diff < min) { min = diff; closest = i; }
-      });
-      current = closest;
-      dots.forEach(function(d, i){ d.classList.toggle('active', i === closest); });
-    }
-    function goTo(i){
-      current = (i + cards.length) % cards.length;
-      cards[current].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
-    }
-    track.addEventListener('scroll', function(){ requestAnimationFrame(updateActiveFromScroll); });
-    window.reviewNav = function(dir){ goTo(current + dir); };
+
+    window.reviewNav = function(dir){
+      current += dir;
+      jumpTo(current, true);
+    };
   })();
 </script>
 
