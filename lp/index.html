@@ -113,7 +113,8 @@ nav a:hover{color:#fff}
 .arrow svg{width:16px;height:16px}
 .score{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 22px;margin-bottom:26px;text-align:center}
 .score b{font-size:clamp(38px,10vw,56px);font-weight:600;letter-spacing:-.03em;line-height:1}
-.score .st{color:var(--claro);font-size:19px;letter-spacing:.08em}
+.score .st{position:relative;display:inline-block;font-size:19px;line-height:1;letter-spacing:.08em;color:rgba(255,255,255,.25);white-space:nowrap;vertical-align:middle}
+.score .st b{position:absolute;left:0;top:0;overflow:hidden;width:98%;white-space:nowrap;color:var(--claro);font-size:19px;font-weight:400;letter-spacing:.08em;line-height:1}
 .score p{color:rgba(255,255,255,.72);font-size:14.5px;font-weight:300;line-height:1.5}
 .review{padding:26px 24px 28px}
 .review .stars{color:var(--claro);font-size:15px;letter-spacing:.1em;margin-bottom:12px}
@@ -313,7 +314,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
       <h2 style="margin-top:12px">O que nossos <span class="serif">clientes dizem</span></h2>
     </div>
     <div class="score">
-      <div style="display:flex;align-items:baseline;gap:10px"><b>4,9</b><span class="st">★★★★★</span></div>
+      <div style="display:flex;align-items:baseline;gap:10px"><b>4,9</b><span class="st">★★★★★<b>★★★★★</b></span></div>
       <p>Média das avaliações no Google<br>com base em mais de 1000 avaliações</p>
     </div>
     <div class="carousel">
