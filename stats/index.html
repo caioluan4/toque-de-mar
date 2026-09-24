@@ -317,7 +317,8 @@
     links: {
       path: '/links/',
       visitsLabel: 'visitas no linktree',
-      baseline: {"2026-08-28":2,"2026-08-29":65,"2026-08-30":29,"2026-08-31":39,"2026-09-01":69,"2026-09-02":50,"2026-09-03":60,"2026-09-04":70,"2026-09-05":27},
+      // até 05/09 o linktree ficava na raiz, então o GoatCounter gravou essas visitas como '/'
+      legacy: { path: '/', until: '2026-09-05' },
       events: [
         ['whatsapp-pedido', 'WhatsApp'],
         ['delivery-ifood', 'iFood'],
@@ -333,7 +334,6 @@
     lp: {
       path: '/lp/',
       visitsLabel: 'visitas no site oficial',
-      baseline: {},
       events: [
         ['lp-peca-aqui', 'Peça Aqui'],
         ['lp-como-chegar', 'Como Chegar'],
@@ -513,14 +513,19 @@
 
   function getPageDays() {
     var page = PAGES[currentPage];
-    if (!STATS || !STATS.items) return Object.assign({}, page.baseline);
+    var merged = {};
+    if (!STATS || !STATS.items) return merged;
     var target = normPath(page.path);
-    var merged = Object.assign({}, page.baseline);
+    var legacyTarget = page.legacy ? normPath(page.legacy.path) : null;
     for (var i = 0; i < STATS.items.length; i++) {
       var item = STATS.items[i];
-      if (!item.event && normPath(item.path) === target) {
-        var days = item.days || {};
-        for (var d in days) merged[d] = (merged[d] || 0) + days[d];
+      if (item.event) continue;
+      var p = normPath(item.path);
+      var days = item.days || {};
+      for (var d in days) {
+        if (p === target || (p === legacyTarget && d <= page.legacy.until)) {
+          merged[d] = (merged[d] || 0) + days[d];
+        }
       }
     }
     return merged;
@@ -771,11 +776,12 @@
     if (!period) return;
     var page = PAGES[currentPage];
     var range = getRange(currentPeriod);
-    var baselineTotal = 0;
-    for (var d in page.baseline) {
-      if (range[0] === null || (d >= range[0] && d <= range[1])) baselineTotal += page.baseline[d];
+    var days = getPageDays();
+    var total = 0;
+    for (var d in days) {
+      if (range[0] === null || (d >= range[0] && d <= range[1])) total += days[d];
     }
-    document.getElementById('page-visits').textContent = baselineTotal + findCount(period.pages, page.path);
+    document.getElementById('page-visits').textContent = total;
     document.getElementById('page-visits-label').textContent = page.visitsLabel;
     renderMetricList('page-events', page.events, period.events);
   }
