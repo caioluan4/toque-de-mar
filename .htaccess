@@ -1,8 +1,4 @@
 ErrorDocument 404 /404.html
 
-# Provisório: domínio principal aponta pro linktree enquanto a landing page não sobe.
-# Remover este redirect quando a LP for publicada no domínio principal.
-RedirectMatch 302 ^/$ /links/
-
-# LP ainda não publicada — bloqueia acesso direto enquanto não é hora de lançar
-RedirectMatch 404 ^/lp(/.*)?$
+# A landing page ficava em /lp/ antes do lançamento; links antigos vão pra raiz
+RedirectMatch 301 ^/lp(/.*)?$ /

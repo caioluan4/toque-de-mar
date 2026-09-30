@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script data-goatcounter="https://toquedemar.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
-<noscript><img src="https://toquedemar.goatcounter.com/count?p=/lp/" style="position:absolute;width:1px;height:1px"></noscript>
+<noscript><img src="https://toquedemar.goatcounter.com/count?p=/" style="position:absolute;width:1px;height:1px"></noscript>
 <style>
 :root{ --azul:#214E80; --teal:#00848F; --claro:#7FD8DE; --ink:#F7F6F2; }
 *{box-sizing:border-box}
@@ -104,9 +104,8 @@ nav a:hover{color:#fff}
 .hint{margin:10px auto 30px;max-width:40ch;color:rgba(255,255,255,.66);font-size:14.5px;font-weight:300;line-height:1.6}
 .row{display:flex;flex-wrap:wrap;gap:14px}
 .frame{position:relative;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.07)}
-.frame.big{flex:2 1 420px;min-width:0;aspect-ratio:16/10}
-.stack{display:flex;flex:1 1 220px;min-width:0;flex-direction:column;gap:14px}
-.stack .frame{flex:1 1 0;min-height:150px}
+.frame.big{flex:1 1 100%;min-width:0;aspect-ratio:21/9}
+@media (max-width:760px){ .frame.big{aspect-ratio:3/2} }
 .ph{width:100%;height:100%;object-fit:cover}
 .ph.miss{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 12px,rgba(255,255,255,.09) 12px 24px);min-height:100%;font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;text-align:center;padding:16px}
 .card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:16px;backdrop-filter:blur(6px);transition:background .2s,transform .2s}
@@ -239,7 +238,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     <a class="btn solid" href="#" onclick="openModal('deliveryOverlay',event)" data-goatcounter-click="lp-peca-aqui">Peça Aqui <span>→</span></a>
     <a class="btn light" href="#" onclick="openModal('locOverlay',event)" data-goatcounter-click="lp-como-chegar">Como Chegar <span>→</span></a>
   </div>
-  <div class="meta"><span>Águas Claras, Brasília/DF</span><span class="dot"></span><span>Ter a Dom · 11h às 22h</span><span class="dot"></span><span style="color:var(--claro)">★ 4,9 no Google</span></div>
+  <div class="meta"><span>Águas Claras, Brasília/DF</span><span class="dot"></span><span>Seg a Sáb · a partir das 11h</span><span class="dot"></span><span style="color:var(--claro)">★ 4,9 no Google</span></div>
 </section>
 
 <section class="sec" id="loja">
@@ -253,10 +252,6 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     </div>
     <div class="row">
       <div class="frame big"><img class="ph" src="fotos/loja-1.jpg" alt="Interior da loja" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Interior da loja'"></div>
-      <div class="stack">
-        <div class="frame"><img class="ph" src="fotos/loja-2.jpg" alt="Vitrine de salgados" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Vitrine de salgados'"></div>
-        <div class="frame"><img class="ph" src="fotos/loja-3.jpg" alt="Balcão e atendimento" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Balcão e atendimento'"></div>
-      </div>
     </div>
   </div>
 </section>
@@ -413,7 +408,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
       <h2>Águas Claras, Brasília</h2>
       <dl>
         <div><dt>Endereço</dt><dd>Av. Boulevard Norte, Lote 4 — Lj 8<br>Ed. Modern Life · 71907-720</dd></div>
-        <div><dt>Horário</dt><dd>Ter a Dom · 11h às 22h</dd></div>
+        <div><dt>Horário</dt><dd>Seg e Ter · 11h às 19h<br>Qua a Sáb · 11h às 20h<br>Domingo fechado</dd></div>
         <div><dt>Telefone</dt><dd>(61) 99902-3013</dd></div>
       </dl>
       <div class="row">
@@ -461,7 +456,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     <div class="fcol" style="flex:1 1 200px">
       <h4>Visite</h4>
       <p class="addr" style="margin-bottom:12px">Av. Boulevard Norte, Lote 4 — Lj 8<br>Ed. Modern Life · Águas Claras<br>Brasília/DF · 71907-720</p>
-      <p class="addr">Ter a Dom · 11h às 22h<br>(61) 99902-3013</p>
+      <p class="addr">Seg e Ter · 11h às 19h<br>Qua a Sáb · 11h às 20h<br>Domingo fechado<br>(61) 99902-3013</p>
     </div>
   </div>
   <div class="wrap legal">

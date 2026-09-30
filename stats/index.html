@@ -328,11 +328,14 @@
         ['loc-waze', 'Waze'],
         ['nav-atacado', 'Pedidos Atacado'],
         ['nav-avalie-google', 'Avalie no Google'],
+        ['nav-site-oficial', 'Site Oficial'],
         ['social-facebook', 'Facebook']
       ]
     },
     lp: {
-      path: '/lp/',
+      // lançada na raiz em 30/09; antes disso '/' eram visitas do linktree antigo
+      path: '/',
+      since: '2026-09-30',
       visitsLabel: 'visitas no site oficial',
       events: [
         ['lp-peca-aqui', 'Peça Aqui'],
@@ -523,7 +526,7 @@
       var p = normPath(item.path);
       var days = item.days || {};
       for (var d in days) {
-        if (p === target || (p === legacyTarget && d <= page.legacy.until)) {
+        if ((p === target && (!page.since || d >= page.since)) || (p === legacyTarget && d <= page.legacy.until)) {
           merged[d] = (merged[d] || 0) + days[d];
         }
       }
