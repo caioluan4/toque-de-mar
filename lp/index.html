@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Toque de Mar</title>
-<meta name="description" content="Salgados gourmet de frutos do mar feitos à mão. Coxinhas, empadas e tortas de camarão, bacalhau e siri. Pedidos pelo WhatsApp em Águas Claras, Brasília/DF.">
+<meta name="description" content="Salgados gourmet de frutos do mar feitos à mão. Coxinhas, empadas e tortas de camarão, bacalhau, caranguejo e mais. Pedidos pelo WhatsApp em Águas Claras, Brasília/DF.">
 <meta property="og:title" content="Toque de Mar — Salgados Gourmet">
 <meta property="og:description" content="Salgados, pratos e caldos feitos com frutos do mar selecionados, todos os dias.">
 <meta property="og:type" content="website">
@@ -180,6 +180,24 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
 .loc-title{margin:0 0 22px;color:#fff;font-size:16px;font-weight:600;text-align:center}
 .loc-opt{width:100%;margin-bottom:12px;padding:19px 22px;border-radius:999px;font-size:14.5px;letter-spacing:.13em}
 .loc-close{display:block;width:100%;background:transparent;border:none;color:rgba(255,255,255,.6);font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:12px;cursor:pointer;font-family:inherit}
+.mosaic{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;aspect-ratio:2.2/1;text-align:left}
+.tile{position:relative;margin:0;min-height:0;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06)}
+.tile.big{grid-row:span 2}
+.tile.wide{grid-column:span 2}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.tile.wide img{object-position:50% 58%}
+.tile:hover img{transform:scale(1.04)}
+.tile figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:4px;padding:48px 20px 18px;background:linear-gradient(180deg,rgba(8,24,42,0) 0%,rgba(8,24,42,.85) 100%)}
+.tile figcaption strong{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.tile figcaption span{color:rgba(255,255,255,.82);font-size:13.5px;font-weight:300;line-height:1.45}
+@media (max-width:760px){
+  .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto;gap:10px}
+  .tile{aspect-ratio:1}
+  .tile.big,.tile.wide{grid-column:span 2;grid-row:auto;aspect-ratio:4/3}
+  .tile figcaption{padding:36px 14px 14px}
+  .tile figcaption strong{font-size:15.5px}
+  .tile:not(.big):not(.wide) figcaption span{display:none}
+}
 .rv .reveal{opacity:0;translate:0 26px;transition:opacity .7s cubic-bezier(.2,.7,.2,1) var(--rd,0s),translate .7s cubic-bezier(.2,.7,.2,1) var(--rd,0s)}
 .rv .card.reveal{transition:opacity .7s cubic-bezier(.2,.7,.2,1) var(--rd,0s),translate .7s cubic-bezier(.2,.7,.2,1) var(--rd,0s),background .2s,transform .2s}
 .rv .reveal.in{opacity:1;translate:0 0}
@@ -248,23 +266,25 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     <p class="eyebrow">Especialidades</p>
     <h2 style="margin-top:12px;margin-bottom:44px">Conheça nossos sabores</h2>
     <div class="row" style="text-align:left">
-      <article class="card fam" data-fam="coxinha" data-n="4">
+      <article class="card fam" data-fam="coxinha" data-n="5">
           <div class="shot">
-            <div class="pane on" data-i="0"><img class="ph" src="fotos/coxinha-camarao.jpg" alt="Coxinha de Camarão com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Camarão com catupiry'"></div>
-            <div class="pane" data-i="1"><img class="ph" src="fotos/coxinha-bacalhau.jpg" alt="Coxinha de Bacalhau" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Bacalhau'"></div>
-            <div class="pane" data-i="2"><img class="ph" src="fotos/coxinha-siri.jpg" alt="Coxinha de Siri" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Siri'"></div>
-            <div class="pane" data-i="3"><img class="ph" src="fotos/coxinha-frango.jpg" alt="Coxinha de Frango com requeijão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Coxinha de Frango com requeijão'"></div>
+            <div class="pane on" data-i="0"><img class="ph" src="fotos/coxinha-camarao.jpg" alt="Coxinha de camarão com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="1"><img class="ph" src="fotos/coxinha-frangocatupiry.jpg" alt="Coxinha de frango com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="2"><img class="ph" src="fotos/coxinha-carneseca.jpg" alt="Coxinha de carne seca com requeijão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="3"><img class="ph" src="fotos/coxinha-salmao.jpg" alt="Coxinha de salmão com cream cheese" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="4"><img class="ph" src="fotos/coxinha-frango.jpg" alt="Coxinha de frango" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
             <span class="tag">Coxinha</span>
           </div>
           <div class="body">
             <div class="txt">
-              <div class="pane on" data-i="0"><h3>Camarão com catupiry</h3><p>Camarão inteiro refogado, catupiry cremoso e massa leve. O carro-chefe da casa.</p></div>
-              <div class="pane" data-i="1"><h3>Bacalhau</h3><p>Bacalhau em lascas com azeite português, batata e cebola.</p></div>
-              <div class="pane" data-i="2"><h3>Siri</h3><p>Siri desfiado no tempero da casa, com leve toque de pimenta.</p></div>
-              <div class="pane" data-i="3"><h3>Frango com requeijão</h3><p>A clássica, para quem não é do time dos frutos do mar.</p></div>
+              <div class="pane on" data-i="0"><h3>Camarão com catupiry</h3><p>Recheio abundante de camarão e Catupiry original, em massa fina e crocante. Sem creme de camarão.</p></div>
+              <div class="pane" data-i="1"><h3>Frango com catupiry</h3><p>Super recheada com frango bem temperado e Catupiry cremoso.</p></div>
+              <div class="pane" data-i="2"><h3>Carne seca com requeijão</h3><p>Carne seca com requeijão e queijo coalho, crocante por fora.</p></div>
+              <div class="pane" data-i="3"><h3>Salmão com cream cheese</h3><p>Salmão temperado na medida, com o toque cremoso do cream cheese.</p></div>
+              <div class="pane" data-i="4"><h3>Frango</h3><p>A clássica: frango suculento em massa fina e crocante.</p></div>
             </div>
             <div class="pager">
-              <span class="count">01 / 04</span>
+              <span class="count">01 / 05</span>
               <span class="arrows">
                 <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -272,23 +292,27 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
             </div>
           </div>
         </article>
-      <article class="card fam" data-fam="empada" data-n="4">
+      <article class="card fam" data-fam="empada" data-n="6">
           <div class="shot">
-            <div class="pane on" data-i="0"><img class="ph" src="fotos/empada-camarao.jpg" alt="Empada de Camarão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Camarão'"></div>
-            <div class="pane" data-i="1"><img class="ph" src="fotos/empada-bacalhau.jpg" alt="Empada de Bacalhau" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Bacalhau'"></div>
-            <div class="pane" data-i="2"><img class="ph" src="fotos/empada-palmito.jpg" alt="Empada de Palmito" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Palmito'"></div>
-            <div class="pane" data-i="3"><img class="ph" src="fotos/empada-frango.jpg" alt="Empada de Frango" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Empada de Frango'"></div>
+            <div class="pane on" data-i="0"><img class="ph" src="fotos/empada-camarao.jpg" alt="Empada de camarão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="1"><img class="ph" src="fotos/empada-bacalhau.jpg" alt="Empada de bacalhau com natas" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="2"><img class="ph" src="fotos/empada-palmito.jpg" alt="Empada de palmito" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="3"><img class="ph" src="fotos/empada-frangocatupiry.jpg" alt="Empada de frango com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="4"><img class="ph" src="fotos/empada-carneseca.jpg" alt="Empada de carne seca com requeijão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="5"><img class="ph" src="fotos/empada-frango.jpg" alt="Empada de frango" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
             <span class="tag">Empada</span>
           </div>
           <div class="body">
             <div class="txt">
-              <div class="pane on" data-i="0"><h3>Camarão</h3><p>Massa amanteigada assada no dia, recheio cremoso com tomate e cheiro-verde.</p></div>
-              <div class="pane" data-i="1"><h3>Bacalhau</h3><p>Lascas de bacalhau, cebola caramelizada e azeitona.</p></div>
-              <div class="pane" data-i="2"><h3>Palmito</h3><p>Palmito pupunha em cubos, creme leve e cheiro-verde.</p></div>
-              <div class="pane" data-i="3"><h3>Frango</h3><p>Frango desfiado com milho e requeijão.</p></div>
+              <div class="pane on" data-i="0"><h3>Camarão</h3><p>Camarão envolto em massa artesanal crocante. Não usamos creme de camarão.</p></div>
+              <div class="pane" data-i="1"><h3>Bacalhau com natas</h3><p>Bacalhau selecionado em um cremoso molho de natas, com massa leve.</p></div>
+              <div class="pane" data-i="2"><h3>Palmito</h3><p>Massa crocante com recheio generoso de palmito.</p></div>
+              <div class="pane" data-i="3"><h3>Frango com catupiry</h3><p>Frango com Catupiry original, em massa que derrete na boca.</p></div>
+              <div class="pane" data-i="4"><h3>Carne seca com requeijão</h3><p>Carne seca bem temperadinha com requeijão, em massa crocante.</p></div>
+              <div class="pane" data-i="5"><h3>Frango</h3><p>Massa douradinha com frango desfiado e bem temperado.</p></div>
             </div>
             <div class="pager">
-              <span class="count">01 / 04</span>
+              <span class="count">01 / 06</span>
               <span class="arrows">
                 <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -296,23 +320,27 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
             </div>
           </div>
         </article>
-      <article class="card fam" data-fam="torta" data-n="4">
+      <article class="card fam" data-fam="torta" data-n="6">
           <div class="shot">
-            <div class="pane on" data-i="0"><img class="ph" src="fotos/torta-camarao.jpg" alt="Torta de Camarão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Camarão'"></div>
-            <div class="pane" data-i="1"><img class="ph" src="fotos/torta-bacalhau.jpg" alt="Torta de Bacalhau" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Bacalhau'"></div>
-            <div class="pane" data-i="2"><img class="ph" src="fotos/torta-frango.jpg" alt="Torta de Frango com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Frango com catupiry'"></div>
-            <div class="pane" data-i="3"><img class="ph" src="fotos/torta-palmito.jpg" alt="Torta de Palmito" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src');this.alt='Torta de Palmito'"></div>
+            <div class="pane on" data-i="0"><img class="ph" src="fotos/torta-camarao.jpg" alt="Torta de camarão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="1"><img class="ph" src="fotos/torta-bacalhau.jpg" alt="Torta de bacalhau com natas" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="2"><img class="ph" src="fotos/torta-frangocatupiry.jpg" alt="Torta de frango com catupiry" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="3"><img class="ph" src="fotos/torta-carneseca.jpg" alt="Torta de carne seca com requeijão" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="4"><img class="ph" src="fotos/torta-palmito.jpg" alt="Torta de palmito" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
+            <div class="pane" data-i="5"><img class="ph" src="fotos/torta-frango.jpg" alt="Torta de frango" loading="lazy" onerror="this.classList.add('miss');this.removeAttribute('src')"></div>
             <span class="tag">Torta</span>
           </div>
           <div class="body">
             <div class="txt">
-              <div class="pane on" data-i="0"><h3>Camarão</h3><p>Fatia generosa com recheio cremoso e palmito. Inteira por encomenda.</p></div>
-              <div class="pane" data-i="1"><h3>Bacalhau</h3><p>Bacalhau desfiado com batata e azeitona, gratinada no forno.</p></div>
-              <div class="pane" data-i="2"><h3>Frango com catupiry</h3><p>Recheio bem cremoso, massa que desmancha na boca.</p></div>
-              <div class="pane" data-i="3"><h3>Palmito</h3><p>Opção vegetariana, com palmito fresco e creme de milho.</p></div>
+              <div class="pane on" data-i="0"><h3>Camarão</h3><p>Camarões selecionados em quantidade generosa e molho feito na casa.</p></div>
+              <div class="pane" data-i="1"><h3>Bacalhau com natas</h3><p>Bacalhau desfiado refogado no azeite, azeitona preta e um toque de natas.</p></div>
+              <div class="pane" data-i="2"><h3>Frango com catupiry</h3><p>Muito frango e Catupiry original, bem cremosa.</p></div>
+              <div class="pane" data-i="3"><h3>Carne seca com requeijão</h3><p>Carne seca refogada no azeite, com requeijão e queijo coalho.</p></div>
+              <div class="pane" data-i="4"><h3>Palmito</h3><p>Palmito suculento com um creme branco irresistível.</p></div>
+              <div class="pane" data-i="5"><h3>Frango</h3><p>Frango cremoso em massa artesanal.</p></div>
             </div>
             <div class="pager">
-              <span class="count">01 / 04</span>
+              <span class="count">01 / 06</span>
               <span class="arrows">
                 <button type="button" class="arrow" data-dir="-1" aria-label="Sabor anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 <button type="button" class="arrow" data-dir="1" aria-label="Próximo sabor"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -321,6 +349,20 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
           </div>
         </article>
     </div>
+  </div>
+</section>
+
+<section class="sec" id="galeria">
+  <div class="wrap center">
+    <p class="eyebrow">Tem mais</p>
+    <h2 style="margin-top:12px;margin-bottom:44px">Mais delícias da casa</h2>
+    <div class="mosaic">
+      <figure class="tile big"><img src="fotos/combo-salgados.jpg" alt="Combos para compartilhar" loading="lazy"><figcaption><strong>Combos para compartilhar</strong><span>Salgados bem recheados e fritos na hora, perfeitos pra dividir.</span></figcaption></figure>
+      <figure class="tile"><img src="fotos/unha-caranguejo.jpg" alt="Unha de caranguejo" loading="lazy"><figcaption><strong>Unha de caranguejo</strong><span>Caranguejo bem temperado em massa fina e crocante.</span></figcaption></figure>
+      <figure class="tile"><img src="fotos/bolinho-bacalhau.jpg" alt="Bolinho de bacalhau" loading="lazy"><figcaption><strong>Bolinho de bacalhau</strong><span>Legítimo bacalhau, com só 20% de batata.</span></figcaption></figure>
+      <figure class="tile wide"><img src="fotos/kibe.jpg" alt="Kibe assado recheado" loading="lazy"><figcaption><strong>Kibe assado recheado</strong><span>Carne bem temperada, muita mussarela e tomate cereja.</span></figcaption></figure>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:28px"><a class="btn ghost" style="padding:15px 24px;font-size:12.5px" href="https://app.cardapioweb.com/toque_de_mar" target="_blank" rel="noopener" data-goatcounter-click="lp-delivery-cardapio">Ver cardápio completo</a></div>
   </div>
 </section>
 
@@ -514,6 +556,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
       '.hero > *',
       '#loja .sec-head > *', '#loja .row > *',
       '#produtos .wrap > p', '#produtos .wrap > h2', '#produtos .row > .card',
+      '#galeria .wrap > p', '#galeria .wrap > h2', '#galeria .tile', '#galeria .wrap > div:last-child',
       '#congelados .wrap > *',
       '#avaliacoes .wrap > *',
       '#local .wrap > *',
