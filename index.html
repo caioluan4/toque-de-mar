@@ -72,7 +72,7 @@ nav a:hover{color:#fff}
   nav.open{max-height:500px}
   nav a{padding:15px 24px;border-bottom:1px solid rgba(255,255,255,.08)}
   .nav-socs{display:flex;justify-content:center;gap:16px;padding:18px 24px}
-  .nav-socs a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);transition:background .16s,border-color .16s}
+  .nav-socs a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:10px;border:1px solid rgba(255,255,255,.25);border-bottom:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);transition:background .16s,border-color .16s}
   .nav-socs a:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6);color:#fff}
 }
 @media (max-width:520px){
@@ -509,7 +509,8 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
   (function(){
     var toggle = document.getElementById('menuToggle');
     var navEl = document.querySelector('header nav');
-    toggle.addEventListener('click', function(){
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
       var isOpen = navEl.classList.toggle('open');
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
@@ -518,6 +519,12 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
         navEl.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
       });
+    });
+    document.addEventListener('click', function(e){
+      if (!navEl.classList.contains('open')) return;
+      if (navEl.contains(e.target) || toggle.contains(e.target)) return;
+      navEl.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
     });
   })();
 
