@@ -66,9 +66,7 @@ nav a:hover{color:#fff}
   .menu-toggle{display:flex;order:5}
   .btn.order-btn,.header-sep{display:none}
   .header-actions{gap:14px}
-  .btn.mobile-cta{display:flex;position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:35;padding:17px 22px;border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.38);transition:transform .3s ease,opacity .3s ease}
-  .mobile-cta.hide{transform:translateY(140%);opacity:0;pointer-events:none}
-  body footer{padding-bottom:110px}
+  .btn.mobile-cta{display:inline-flex;padding:9px 14px;font-size:10.5px;border-radius:9px;letter-spacing:.1em;order:4}
   nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#0f2c49;border-bottom:1px solid rgba(255,255,255,.14);max-height:0;overflow:hidden;transition:max-height .25s ease}
   nav.open{max-height:420px}
   nav a{padding:15px 24px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -139,14 +137,19 @@ nav a:hover{color:#fff}
 .review .stars{color:var(--claro);font-size:15px;letter-spacing:.1em;margin-bottom:12px}
 .review .quote{font-size:15.5px;font-weight:300;line-height:1.65;color:rgba(255,255,255,.88);margin-bottom:18px;text-wrap:pretty}
 .review .who{color:rgba(255,255,255,.6);font-size:13px}
-.carousel{display:flex;align-items:center;gap:14px}
-@media (max-width:640px){ .carousel .car-arrow{display:none} }
+.carousel{display:flex;align-items:center;gap:14px;position:relative}
 .car-track{flex:1 1 auto;display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 4px;-ms-overflow-style:none;scrollbar-width:none}
 .car-track::-webkit-scrollbar{display:none}
 .car-track .card.review{scroll-snap-align:start;flex:0 0 100%}
 @media (min-width:760px){.car-track .card.review{flex:0 0 calc(33.333% - 14px)}}
-.car-arrow{flex:none;width:36px;height:40px;background:none;border:none;font-size:28px;font-weight:300;color:rgba(255,255,255,.5);line-height:1;transition:color .16s}
+.car-arrow{flex:none;width:36px;height:40px;background:none;border:none;font-size:28px;font-weight:300;color:rgba(255,255,255,.5);line-height:1;cursor:pointer;transition:color .16s}
 .car-arrow:hover{background:none;border-color:transparent;color:#fff}
+@media (max-width:640px){
+  .carousel{gap:0}
+  .car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:32px;height:44px;background:rgba(11,31,51,.7);border-radius:8px;font-size:22px;color:rgba(255,255,255,.8);backdrop-filter:blur(4px)}
+  .car-arrow:first-of-type{left:6px}
+  .car-arrow:last-of-type{right:6px}
+}
 .info{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:14px 0}
 .info h2{margin-bottom:26px;font-size:clamp(27px,6.6vw,38px);line-height:1.12}
 .info dl{display:flex;flex-direction:column;gap:18px;margin:0}
@@ -221,6 +224,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
       <a href="https://app.cardapioweb.com/toque_de_mar" target="_blank" rel="noopener" data-goatcounter-click="lp-delivery-cardapio">Cardápio Digital</a>
     </nav>
     <div class="header-actions">
+      <a class="btn solid sm mobile-cta" href="#" onclick="openModal('deliveryOverlay',event)" data-goatcounter-click="lp-peca-aqui">Peça Aqui</a>
       <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <a class="soc-mini" href="https://www.instagram.com/toquedemaroficial/" target="_blank" rel="noopener" aria-label="Instagram" data-goatcounter-click="lp-social-instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="16.7" cy="7.3" r="1" fill="currentColor"/></svg></a>
       <a class="soc-mini" href="https://www.facebook.com/toquedemaroficial/" target="_blank" rel="noopener" aria-label="Facebook" data-goatcounter-click="lp-social-facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a>
@@ -230,7 +234,6 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     </div>
   </div>
 </header>
-<a class="btn solid mobile-cta" href="#" onclick="openModal('deliveryOverlay',event)" data-goatcounter-click="lp-peca-aqui">Peça Aqui <span>→</span></a>
 
 <main>
 <section class="hero" id="topo">
@@ -504,16 +507,6 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
-  })();
-
-  (function(){
-    var cta = document.querySelector('.mobile-cta');
-    var heroCta = document.querySelector('.hero .cta-row');
-    if (!cta || !heroCta || !('IntersectionObserver' in window)) return;
-    cta.classList.add('hide');
-    new IntersectionObserver(function(entries){
-      cta.classList.toggle('hide', entries[0].isIntersecting);
-    }).observe(heroCta);
   })();
 
   function openModal(id,e){ if(e) e.preventDefault(); document.getElementById(id).classList.add('open'); }
