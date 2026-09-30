@@ -189,8 +189,10 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
 .loc-title{margin:0 0 22px;color:#fff;font-size:16px;font-weight:600;text-align:center}
 .loc-opt{width:100%;margin-bottom:12px;padding:19px 22px;border-radius:999px;font-size:14.5px;letter-spacing:.13em}
 .loc-close{display:block;width:100%;background:transparent;border:none;color:rgba(255,255,255,.6);font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:12px;cursor:pointer;font-family:inherit}
-.mosaic{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:repeat(4,minmax(0,1fr));gap:14px;text-align:left}
-.tile{position:relative;margin:0;min-height:180px;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06)}
+.mosaic{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;aspect-ratio:2.2/1;text-align:left}
+.caldos-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.caldos-row .tile{aspect-ratio:4/3}
+.tile{position:relative;margin:0;min-height:0;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06)}
 .tile.big{grid-row:span 2}
 .tile.wide{grid-column:span 2}
 .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
@@ -201,6 +203,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
 .tile figcaption span{color:rgba(255,255,255,.82);font-size:13.5px;font-weight:300;line-height:1.45}
 @media (max-width:760px){
   .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto;gap:10px}
+  .caldos-row{grid-template-columns:1fr;gap:10px;margin-top:10px}
   .tile{aspect-ratio:1}
   .tile.big,.tile.wide{grid-column:span 2;grid-row:auto;aspect-ratio:4/3}
   .tile figcaption{padding:36px 14px 14px}
@@ -372,7 +375,9 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
       <figure class="tile"><img src="fotos/unha-caranguejo.jpg" alt="Unha de caranguejo" loading="lazy"><figcaption><strong>Unha de caranguejo</strong><span>Caranguejo bem temperado em massa fina e crocante.</span></figcaption></figure>
       <figure class="tile"><img src="fotos/bolinho-bacalhau.jpg" alt="Bolinho de bacalhau" loading="lazy"><figcaption><strong>Bolinho de bacalhau</strong><span>Legítimo bacalhau.</span></figcaption></figure>
       <figure class="tile wide"><img src="fotos/kibe.jpg" alt="Kibe assado recheado" loading="lazy"><figcaption><strong>Kibe assado recheado</strong><span>Carne bem temperada, muita mussarela e tomate cereja.</span></figcaption></figure>
-      <figure class="tile big"><img src="fotos/caldo-camarao.jpg" alt="Caldo de camarão" loading="lazy"><figcaption><strong>Caldo de camarão</strong><span>Caldo encorpado, feito com camarões frescos e tempero da casa.</span></figcaption></figure>
+    </div>
+    <div class="caldos-row">
+      <figure class="tile"><img src="fotos/caldo-camarao.jpg" alt="Caldo de camarão" loading="lazy"><figcaption><strong>Caldo de camarão</strong><span>Caldo encorpado, feito com camarões frescos e tempero da casa.</span></figcaption></figure>
       <figure class="tile"><img src="fotos/caldo-caranguejo.jpg" alt="Caldo de caranguejo" loading="lazy"><figcaption><strong>Caldo de caranguejo</strong><span>Sabor intenso do caranguejo em cada colherada.</span></figcaption></figure>
       <figure class="tile"><img src="fotos/caldo-peixe.jpg" alt="Caldo de peixe" loading="lazy"><figcaption><strong>Caldo de peixe</strong><span>Peixe fresco com temperos especiais, leve e reconfortante.</span></figcaption></figure>
     </div>
