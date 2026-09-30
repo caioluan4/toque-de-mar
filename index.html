@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Toque de Mar</title>
 <meta name="description" content="Salgados gourmet de frutos do mar feitos à mão. Coxinhas, empadas e tortas de camarão, bacalhau, caranguejo e mais. Pedidos pelo WhatsApp em Águas Claras, Brasília/DF.">
 <meta property="og:title" content="Toque de Mar — Salgados Gourmet">
@@ -61,11 +61,14 @@ nav{display:flex;justify-content:flex-start;gap:8px}
 nav a{flex:none;padding:9px 4px;font-size:14.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.78);white-space:nowrap;transition:color .16s}
 nav a:hover{color:#fff}
 @media (min-width:900px){ nav a{padding:9px 10px} }
+.btn.mobile-cta{display:none}
 @media (max-width:899px){
-  .bar{grid-template-areas:"order brand"}
-  .brand{justify-self:end}
-  .header-actions{justify-self:start}
-  .menu-toggle{display:flex}
+  .menu-toggle{display:flex;order:5}
+  .btn.order-btn,.header-sep{display:none}
+  .header-actions{gap:14px}
+  .btn.mobile-cta{display:flex;position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:35;padding:17px 22px;border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.38);transition:transform .3s ease,opacity .3s ease}
+  .mobile-cta.hide{transform:translateY(140%);opacity:0;pointer-events:none}
+  body footer{padding-bottom:110px}
   nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#0f2c49;border-bottom:1px solid rgba(255,255,255,.14);max-height:0;overflow:hidden;transition:max-height .25s ease}
   nav.open{max-height:420px}
   nav a{padding:15px 24px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -227,6 +230,7 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
     </div>
   </div>
 </header>
+<a class="btn solid mobile-cta" href="#" onclick="openModal('deliveryOverlay',event)" data-goatcounter-click="lp-peca-aqui">Peça Aqui <span>→</span></a>
 
 <main>
 <section class="hero" id="topo">
@@ -500,6 +504,16 @@ footer{border-top:1px solid rgba(255,255,255,.14);background:rgba(12,32,54,.5);b
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
+  })();
+
+  (function(){
+    var cta = document.querySelector('.mobile-cta');
+    var heroCta = document.querySelector('.hero .cta-row');
+    if (!cta || !heroCta || !('IntersectionObserver' in window)) return;
+    cta.classList.add('hide');
+    new IntersectionObserver(function(entries){
+      cta.classList.toggle('hide', entries[0].isIntersecting);
+    }).observe(heroCta);
   })();
 
   function openModal(id,e){ if(e) e.preventDefault(); document.getElementById(id).classList.add('open'); }
