@@ -1,4 +1,0 @@
-ErrorDocument 404 /404.html
-
-# A landing page ficava em /lp/ antes do lançamento; links antigos vão pra raiz
-RedirectMatch 301 ^/lp(/.*)?$ /
